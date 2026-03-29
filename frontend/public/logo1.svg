@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 110" fill="none">
+
+  <!-- ── TOP ORNAMENTAL CROWN ──────────────────────────────────────────── -->
+  <!-- Central petal -->
+  <path d="M40 3 C37.5 8.5 32 12.5 25 15.5 C32 18.5 37.5 22.5 40 28 C42.5 22.5 48 18.5 55 15.5 C48 12.5 42.5 8.5 40 3Z" fill="#C9A96E"/>
+
+  <!-- Left swash arm -->
+  <path d="M25 15.5 C18.5 18 12 22 8 28" stroke="#C9A96E" stroke-width="1.1" stroke-linecap="round" fill="none" opacity="0.7"/>
+  <path d="M8 28 C9.5 25.5 13 25 17 26.5" stroke="#C9A96E" stroke-width="0.9" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M8 28 C6.5 31 7.5 34 10.5 35" stroke="#C9A96E" stroke-width="0.7" stroke-linecap="round" fill="none" opacity="0.35"/>
+
+  <!-- Right swash arm -->
+  <path d="M55 15.5 C61.5 18 68 22 72 28" stroke="#C9A96E" stroke-width="1.1" stroke-linecap="round" fill="none" opacity="0.7"/>
+  <path d="M72 28 C70.5 25.5 67 25 63 26.5" stroke="#C9A96E" stroke-width="0.9" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M72 28 C73.5 31 72.5 34 69.5 35" stroke="#C9A96E" stroke-width="0.7" stroke-linecap="round" fill="none" opacity="0.35"/>
+
+  <!-- ── TOP SERIF CROSSBAR ─────────────────────────────────────────────── -->
+  <rect x="21" y="30" width="38" height="2.2" fill="#C9A96E"/>
+  <!-- Outer serif wings -->
+  <rect x="17.5" y="30" width="5" height="1.4" fill="#C9A96E" opacity="0.55"/>
+  <rect x="57.5" y="30" width="5" height="1.4" fill="#C9A96E" opacity="0.55"/>
+
+  <!-- ── VERTICAL STEM ──────────────────────────────────────────────────── -->
+  <rect x="36.5" y="32.2" width="7" height="45.6" fill="#C9A96E"/>
+
+  <!-- ── MID DECORATIVE SCROLLWORK ─────────────────────────────────────── -->
+  <!-- Left scroll -->
+  <path d="M36.5 55 C30 51.5 22 53 20 57.5 C22 62 30 61 36.5 57.5" fill="none" stroke="#C9A96E" stroke-width="0.9" opacity="0.45"/>
+  <!-- Right scroll -->
+  <path d="M43.5 55 C50 51.5 58 53 60 57.5 C58 62 50 61 43.5 57.5" fill="none" stroke="#C9A96E" stroke-width="0.9" opacity="0.45"/>
+  <!-- Diamond ornament left -->
+  <rect x="14" y="54.5" width="4.5" height="4.5" transform="rotate(45 16.25 56.75)" fill="#C9A96E" opacity="0.3"/>
+  <!-- Diamond ornament right -->
+  <rect x="61.5" y="54.5" width="4.5" height="4.5" transform="rotate(45 63.75 56.75)" fill="#C9A96E" opacity="0.3"/>
+
+  <!-- ── BOTTOM SERIF CROSSBAR ──────────────────────────────────────────── -->
+  <rect x="21" y="77.8" width="38" height="2.2" fill="#C9A96E"/>
+  <!-- Outer serif wings -->
+  <rect x="17.5" y="78.6" width="5" height="1.4" fill="#C9A96E" opacity="0.55"/>
+  <rect x="57.5" y="78.6" width="5" height="1.4" fill="#C9A96E" opacity="0.55"/>
+
+  <!-- ── BOTTOM ORNAMENTAL CROWN (mirror) ───────────────────────────────── -->
+  <!-- Left swash arm -->
+  <path d="M25 94.5 C18.5 92 12 88 8 82" stroke="#C9A96E" stroke-width="1.1" stroke-linecap="round" fill="none" opacity="0.7"/>
+  <path d="M8 82 C9.5 84.5 13 85 17 83.5" stroke="#C9A96E" stroke-width="0.9" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M8 82 C6.5 79 7.5 76 10.5 75" stroke="#C9A96E" stroke-width="0.7" stroke-linecap="round" fill="none" opacity="0.35"/>
+
+  <!-- Right swash arm -->
+  <path d="M55 94.5 C61.5 92 68 88 72 82" stroke="#C9A96E" stroke-width="1.1" stroke-linecap="round" fill="none" opacity="0.7"/>
+  <path d="M72 82 C70.5 84.5 67 85 63 83.5" stroke="#C9A96E" stroke-width="0.9" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M72 82 C73.5 79 72.5 76 69.5 75" stroke="#C9A96E" stroke-width="0.7" stroke-linecap="round" fill="none" opacity="0.35"/>
+
+  <!-- Central petal (inverted) -->
+  <path d="M40 107 C37.5 101.5 32 97.5 25 94.5 C32 91.5 37.5 87.5 40 82 C42.5 87.5 48 91.5 55 94.5 C48 97.5 42.5 101.5 40 107Z" fill="#C9A96E"/>
+
+</svg>

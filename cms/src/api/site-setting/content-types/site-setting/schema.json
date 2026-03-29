@@ -1,0 +1,49 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_settings",
+  "info": {
+    "singularName": "site-setting",
+    "pluralName": "site-settings",
+    "displayName": "Site Setting",
+    "description": "Global site settings — hero, CTA, contact info, social links"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "hero_title": {
+      "type": "string"
+    },
+    "hero_subtitle": {
+      "type": "text"
+    },
+    "hero_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "cta_title": {
+      "type": "string"
+    },
+    "cta_subtitle": {
+      "type": "text"
+    },
+    "contact_email": {
+      "type": "email"
+    },
+    "contact_phone": {
+      "type": "string"
+    },
+    "contact_address": {
+      "type": "text"
+    },
+    "social_instagram": {
+      "type": "string"
+    },
+    "social_pinterest": {
+      "type": "string"
+    }
+  }
+}

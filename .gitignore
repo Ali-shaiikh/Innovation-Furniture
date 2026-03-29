@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+
+# Environment variables — NEVER commit
+.env
+.env.local
+.env.development
+.env.production
+.env.staging
+.env.test
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# Strapi
+cms/.strapi/
+cms/dist/
+cms/build/
+cms/.strapi-updater.json
+cms/.strapi-cloud.json
+cms/exports/
+cms/.tmp/
+
+# Next.js
+frontend/.next/
+frontend/out/
+frontend/build/
+
+# Misc
+.vercel
+coverage/
+
+# Old mock server (not needed — real CMS is in /cms)
+strapi/
+
+# Claude Code settings
+.claude/
