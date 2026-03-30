@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run CMS (Strapi) dev",
+			"type": "shell",
+			"command": "cd cms && npm run develop",
+			"isBackground": true
+		},
+		{
+			"label": "Run Frontend (Next.js) dev",
+			"type": "shell",
+			"command": "cd frontend && npm run dev",
+			"isBackground": true
+		}
+	]
+}

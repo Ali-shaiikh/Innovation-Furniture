@@ -6,8 +6,17 @@ import AnimatedSection, { StaggeredChildren } from "./AnimatedSection";
 
 // ─── Category Card ─────────────────────────────────────────────────────────────
 
+// Slug → local filename overrides (for when filename ≠ slug)
+const LOCAL_IMAGE_MAP: Record<string, string> = {
+  "coffee-tables": "coffee-table",
+};
+
 function CategoryCard({ category, index }: { category: Category; index: number }) {
-  const imageUrl = category.image ? getStrapiImageUrl(category.image.url) : null;
+  const localFile = LOCAL_IMAGE_MAP[category.slug] ?? category.slug;
+  // Strapi image takes priority; fall back to /category/{slug}.png if present
+  const imageUrl = category.image
+    ? getStrapiImageUrl(category.image.url)
+    : `/category/${localFile}.png`;
   const imageAlt = category.image?.alternativeText ?? category.name;
 
   return (
@@ -17,18 +26,15 @@ function CategoryCard({ category, index }: { category: Category; index: number }
       aria-label={`Browse ${category.name}`}
     >
       {/* Background */}
-      {imageUrl ? (
-        <Image
-          src={imageUrl}
-          alt={imageAlt}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-          loading="lazy"
-        />
-      ) : (
-        <div className="absolute inset-0 bg-[#2A1F16]" />
-      )}
+      <div className="absolute inset-0 bg-[#2A1F16]" />
+      <Image
+        src={imageUrl}
+        alt={imageAlt}
+        fill
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+        loading="lazy"
+      />
 
       {/* Gradient overlay */}
       <div

@@ -52,7 +52,7 @@ export function getStrapiImageUrl(url: string | null | undefined): string {
 
 export async function getCategories(): Promise<Category[]> {
   const res = await fetchStrapi<StrapiResponse<Category[]>>(
-    "/categories?populate=image&sort=name:asc"
+    "/categories?populate=image&sort=order:asc"
   );
   return res?.data ?? [];
 }
@@ -73,7 +73,7 @@ export async function getProducts(params?: {
 }): Promise<Product[]> {
   const qs = new URLSearchParams();
   qs.set("populate", "*");
-  qs.set("sort", "createdAt:desc");
+  qs.set("sort", "createdAt:asc");
 
   if (params?.categorySlug) {
     qs.set("filters[category][slug][$eq]", params.categorySlug);

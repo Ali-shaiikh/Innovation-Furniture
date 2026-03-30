@@ -48,6 +48,11 @@ export const metadata: Metadata = {
     index:  true,
     follow: true,
   },
+  icons: {
+    icon: "/logo3.svg",
+    shortcut: "/logo3.svg",
+    apple: "/logo3.svg",
+  },
 };
 
 export const viewport: Viewport = {

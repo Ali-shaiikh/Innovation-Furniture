@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import Image from "next/image";
 import NavbarServer from "@/components/NavbarServer";
 import ProductCard from "@/components/ProductCard";
@@ -66,9 +65,10 @@ export default async function CategoryPage({
     getProducts({ categorySlug: slug }),
   ]);
 
-  if (!category) notFound();
+  // If category not in Strapi yet, render a placeholder page instead of 404
+  const categoryName = category?.name ?? slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
-  const coverImageUrl = category.image
+  const coverImageUrl = category?.image
     ? getStrapiImageUrl(category.image.url)
     : null;
 
@@ -82,7 +82,7 @@ export default async function CategoryPage({
         {coverImageUrl ? (
           <Image
             src={coverImageUrl}
-            alt={category.image?.alternativeText ?? category.name}
+            alt={category?.image?.alternativeText ?? categoryName}
             fill
             priority
             className="object-cover"
@@ -112,14 +112,14 @@ export default async function CategoryPage({
           <nav className="breadcrumb mb-5">
             <a href="/">Home</a>
             <span className="breadcrumb-sep">/</span>
-            <span className="text-[#C9A96E]">{category.name}</span>
+            <span className="text-[#C9A96E]">{categoryName}</span>
           </nav>
 
           <div className="gold-line mb-5" />
           <h1 className="font-serif text-[2.5rem] lg:text-[3.5rem] font-light text-[#F5EFE4]">
-            {category.name}
+            {categoryName}
           </h1>
-          {category.description && (
+          {category?.description && (
             <p className="font-sans text-sm text-[rgba(245,239,228,0.55)] mt-3 max-w-lg font-light leading-relaxed">
               {category.description}
             </p>
@@ -131,10 +131,10 @@ export default async function CategoryPage({
       </div>
 
       {/* ── Products Grid ────────────────────────────────────────────────── */}
-      <section className="section-pad bg-[#FAF7F2]" aria-label={`${category.name} products`}>
+      <section className="section-pad bg-[#FAF7F2]" aria-label={`${categoryName} products`}>
         <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
           {products.length === 0 ? (
-            <EmptyState categoryName={category.name} />
+            <EmptyState categoryName={categoryName} />
           ) : (
             <StaggeredChildren
               className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6"

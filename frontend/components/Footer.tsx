@@ -41,11 +41,11 @@ export default async function Footer() {
           <div className="lg:col-span-2">
             <Link href="/" className="inline-block mb-6">
               <Image
-                src="/logo.png"
+                src="/logo3.svg"
                 alt="Innovation Designer Furniture"
-                width={160}
-                height={160}
-                className="w-[120px] lg:w-[140px] h-auto"
+                width={80}
+                height={120}
+                className="w-[70px] lg:w-[80px] h-auto opacity-90"
               />
             </Link>
 

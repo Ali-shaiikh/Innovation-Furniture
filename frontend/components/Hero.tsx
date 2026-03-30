@@ -72,7 +72,7 @@ export default function Hero({ settings }: HeroProps) {
 
     const onScroll = () => {
       const y = window.scrollY;
-      el.style.transform = `translateY(${y * 0.18}px)`;
+      el.style.transform = `translateY(${y * 0.08}px)`;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -85,10 +85,10 @@ export default function Hero({ settings }: HeroProps) {
       aria-label="Hero"
     >
       {/* ── Background ──────────────────────────────────────────────────────── */}
-      {/* Extend 15% beyond container on all sides so parallax never exposes edges */}
+      {/* Extend 5% beyond container — just enough to hide parallax travel */}
       <div
         className="hero-bg absolute will-change-transform"
-        style={{ inset: "-15%" }}
+        style={{ inset: "-5%" }}
       >
         {/* CSS atmospheric sits underneath as base layer */}
         <div className="absolute inset-0 hero-atmospheric noise-overlay" />
@@ -140,15 +140,32 @@ export default function Hero({ settings }: HeroProps) {
       <div className="relative z-10 max-w-[1440px] mx-auto w-full px-6 lg:px-12 pt-20">
         <div className="max-w-[680px]">
 
+          {/* Eyebrow */}
+          <p
+            className="opacity-0 animate-fade-in-up"
+            style={{
+              fontFamily: "var(--font-jost, sans-serif)",
+              fontSize: "0.68rem",
+              letterSpacing: "0.28em",
+              textTransform: "uppercase",
+              color: "#C9A96E",
+              marginBottom: "1.2rem",
+              animationDelay: "100ms",
+              animationFillMode: "forwards",
+            }}
+          >
+            Innovation Designer Furniture
+          </p>
+
           {/* Main Heading */}
           <h1
             className="font-serif opacity-0 animate-fade-in-up"
             style={{
-              fontSize: "clamp(3rem, 7vw, 6rem)",
+              fontSize: "clamp(2.2rem, 4.5vw, 4rem)",
               fontWeight: 300,
-              lineHeight: 1.05,
-              letterSpacing: "-0.02em",
-              color: "#F5EFE4",
+              lineHeight: 1.1,
+              letterSpacing: "0.01em",
+              color: "#E8DDD0",
               animationDelay: "200ms",
               animationFillMode: "forwards",
             }}
@@ -156,32 +173,43 @@ export default function Hero({ settings }: HeroProps) {
             {settings?.hero_title ?? (
               <>
                 Luxury Living
-                <em
+                <span
                   className="block"
                   style={{
-                    fontStyle: "italic",
                     fontWeight: 300,
-                    color: "#C9A96E",
-                    marginTop: "0.05em",
+                    color: "#C9B99A",
+                    fontSize: "clamp(1.4rem, 2.8vw, 2.6rem)",
+                    marginTop: "0.18em",
+                    letterSpacing: "0.02em",
                   }}
                 >
                   Without the Luxury Price
-                </em>
+                </span>
               </>
             )}
           </h1>
 
+          {/* Gold rule */}
+          <div
+            className="opacity-0 animate-fade-in-up"
+            style={{ animationDelay: "420ms", animationFillMode: "forwards" }}
+          >
+            <div style={{ width: "2.5rem", height: "1px", background: "#C9A96E", opacity: 0.6, margin: "1.4rem 0" }} />
+          </div>
+
           {/* Subtitle */}
           <p
-            className="font-sans mt-6 mb-10 opacity-0 animate-fade-in-up"
+            className="font-sans opacity-0 animate-fade-in-up"
             style={{
-              fontSize: "clamp(0.95rem, 1.5vw, 1.05rem)",
-              color: "rgba(245,239,228,0.65)",
+              fontSize: "clamp(0.82rem, 1.2vw, 0.92rem)",
+              color: "rgba(210,196,178,0.72)",
               fontWeight: 300,
-              lineHeight: 1.8,
-              maxWidth: "460px",
+              lineHeight: 1.9,
+              maxWidth: "400px",
+              letterSpacing: "0.02em",
               animationDelay: "500ms",
               animationFillMode: "forwards",
+              marginBottom: "2.2rem",
             }}
           >
             {subtitle}
@@ -189,7 +217,7 @@ export default function Hero({ settings }: HeroProps) {
 
           {/* CTA Buttons */}
           <div
-            className="flex flex-wrap items-center gap-4 opacity-0 animate-fade-in-up"
+            className="flex flex-wrap items-center gap-3 opacity-0 animate-fade-in-up"
             style={{ animationDelay: "650ms", animationFillMode: "forwards" }}
           >
             <Link href="#categories" className="btn-primary">
@@ -212,8 +240,8 @@ export default function Hero({ settings }: HeroProps) {
                   <span
                     className="font-serif"
                     style={{
-                      fontSize: "1.6rem",
-                      fontWeight: 400,
+                      fontSize: "1.4rem",
+                      fontWeight: 300,
                       color: "#C9A96E",
                       lineHeight: 1,
                     }}
@@ -223,10 +251,10 @@ export default function Hero({ settings }: HeroProps) {
                   <span
                     className="font-sans mt-1"
                     style={{
-                      fontSize: "0.7rem",
+                      fontSize: "0.65rem",
                       letterSpacing: "0.15em",
                       textTransform: "uppercase",
-                      color: "rgba(245,239,228,0.45)",
+                      color: "rgba(210,196,178,0.5)",
                     }}
                   >
                     {label}
