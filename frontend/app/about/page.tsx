@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import NavbarServer from "@/components/NavbarServer";
 import Footer from "@/components/Footer";
 import AnimatedSection, { StaggeredChildren } from "@/components/AnimatedSection";
@@ -40,6 +41,67 @@ export default async function AboutPage() {
           </h1>
         </div>
       </div>
+
+      {/* ── Our Story ────────────────────────────────────────────────────── */}
+      <section className="section-pad bg-[#FAF7F2]">
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+            {/* Founder photo */}
+            <AnimatedSection className="relative">
+              <div className="relative aspect-[3/4] overflow-hidden bg-[#EDE4D8]">
+                <Image
+                  src="/founder.jpg"
+                  alt="Altaf Shaikh — Founder, Innovation Designer Furniture"
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                {/* Gold corner ornament */}
+                <div className="absolute bottom-0 left-0 w-16 h-16 pointer-events-none">
+                  <div className="absolute bottom-0 left-0 w-full h-px bg-[#C9A96E] opacity-60" />
+                  <div className="absolute bottom-0 left-0 w-px h-full bg-[#C9A96E] opacity-60" />
+                </div>
+              </div>
+              {/* Caption */}
+              <div className="mt-4 flex items-center gap-3">
+                <div className="w-8 h-px bg-[#C9A96E] opacity-50" />
+                <p className="font-sans text-[11px] tracking-[0.18em] uppercase text-[#8B7D6E]">
+                  Altaf Shaikh — Founder
+                </p>
+              </div>
+            </AnimatedSection>
+
+            {/* Story text */}
+            <AnimatedSection delay={150}>
+              <p className="eyebrow mb-4">Our Story</p>
+              <h2 className="font-serif text-[2rem] lg:text-[2.6rem] font-light text-[#3D2B1F] mb-6 leading-tight">
+                A Legacy Built on<br />
+                <em className="text-[#C9A96E]">Craftsmanship</em>
+              </h2>
+              <div className="w-10 h-px bg-[#C9A96E] opacity-50 mb-8" />
+
+              <div className="space-y-5 font-sans text-[14.5px] text-[#3D2B1F] font-light leading-[1.9] text-[rgba(61,43,31,0.82)]">
+                <p>Innovation Designer Furniture is built on a legacy that goes far beyond a single generation. For decades, furniture making has been a part of our family's heritage — a craft passed down through hands, experience, and an eye for detail.</p>
+                <p>This journey took a defining step in 2004, when Altaf Shaikh established our first store in Mira Road. What began as a modest setup was driven by a simple vision — to deliver quality craftsmanship and thoughtful design to every home.</p>
+                <p>Over the years, with consistency, trust, and a strong commitment to excellence, we gradually expanded our presence across Mumbai — Kandivali, Vashi, Virar, and Kharghar. Today, Innovation Designer Furniture is well known in the industry, recognized for its quality, reliability, and design sensibility.</p>
+                <p>As we grew, so did our approach. From being a furniture-focused business, we evolved into a complete design studio offering both premium furniture and interior solutions. Our work blends traditional craftsmanship with modern aesthetics, creating spaces that are both elegant and functional.</p>
+                <p>Our reach now extends beyond borders, serving international clients who value the same level of detail and authenticity that define our work.</p>
+                <p>Despite this growth, our foundation remains the same — respect for our roots, dedication to quality, and a belief that every space we design should feel personal.</p>
+              </div>
+
+              <div className="mt-10 pt-8 border-t border-[rgba(61,43,31,0.08)]">
+                <p className="font-serif text-[1.15rem] text-[#C9A96E] font-light italic">
+                  "Innovation is how we move forward.
+                </p>
+                <p className="font-serif text-[1.15rem] text-[#C9A96E] font-light italic mt-1">
+                  Craftsmanship is where we come from."
+                </p>
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
 
       {/* ── Mission — only rendered when about_mission is set in Strapi ──── */}
       {(settings?.about_mission || hasStats) && (
