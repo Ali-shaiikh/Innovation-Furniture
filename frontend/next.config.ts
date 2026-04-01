@@ -1,10 +1,6 @@
-import path from "path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Fix double-lockfile workspace warning
-  outputFileTracingRoot: path.join(__dirname, "../../"),
-
   images: {
     remotePatterns: [
       // Local Strapi (development)
