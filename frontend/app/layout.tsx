@@ -22,7 +22,7 @@ const jost = Jost({
 
 // ─── Metadata ──────────────────────────────────────────────────────────────────
 
-const BASE_URL = "https://innovation-furniture.vercel.app";
+const BASE_URL = "https://innovationfurniture.in";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

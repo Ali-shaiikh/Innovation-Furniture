@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getCategories, getProducts } from "@/lib/strapi";
 
-const BASE_URL = "https://innovation-furniture.vercel.app";
+const BASE_URL = "https://innovationfurniture.in";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [categories, products] = await Promise.all([
