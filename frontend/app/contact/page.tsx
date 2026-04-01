@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 const DEFAULT_CONTACT = {
   email:   "info@innovationfurniture.in",
-  phone:   "+91 98765 43210",
+  phone:   "+91 9892410488",
   cities:  "Mumbai · Delhi · Bengaluru",
   hours:   "Mon – Sat, 10am – 7pm",
 };
