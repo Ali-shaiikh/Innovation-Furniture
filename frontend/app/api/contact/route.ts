@@ -1,10 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// ─── Simple in-memory rate limiter (per IP, resets on cold start) ──────────────
+const rateLimitMap = new Map<string, { count: number; ts: number }>();
+const LIMIT = 5;        // max submissions
+const WINDOW = 60_000;  // per 60 seconds
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now - entry.ts > WINDOW) {
+    rateLimitMap.set(ip, { count: 1, ts: now });
+    return false;
+  }
+  if (entry.count >= LIMIT) return true;
+  entry.count++;
+  return false;
+}
+
 // ─── Contact form API route ────────────────────────────────────────────────────
-// Uses Web3Forms (free — https://web3forms.com) to deliver emails.
-// Set WEB3FORMS_KEY in .env.local / Vercel environment variables.
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "unknown";
+  if (isRateLimited(ip)) {
+    return NextResponse.json({ error: "Too many requests. Please wait." }, { status: 429 });
+  }
   try {
     const body = await req.json();
     const { name, email, phone, city, interest, message } = body;
