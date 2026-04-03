@@ -25,18 +25,22 @@ async function fetchStrapi<T>(
         Authorization: `Bearer ${STRAPI_TOKEN}`,
         "Content-Type": "application/json",
       },
+      // On 5xx errors (Strapi sleeping), use stale cache instead of caching empty
       next: { revalidate },
     });
 
     if (!res.ok) {
       console.error(`Strapi fetch error [${res.status}]: ${url}`);
+      // For server errors (503 = sleeping), throw so Next.js keeps the stale cache
+      if (res.status >= 500) throw new Error(`Strapi unavailable: ${res.status}`);
       return null;
     }
 
     return res.json() as Promise<T>;
   } catch (err) {
     console.error(`Strapi network error: ${url}`, err);
-    return null;
+    // Re-throw so Next.js ISR keeps serving the last successful cached response
+    throw err;
   }
 }
 
