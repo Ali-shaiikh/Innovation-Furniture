@@ -93,7 +93,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
     {/* WhatsApp quick quote */}
     <a
-      href={`https://wa.me/918169566689?text=${encodeURIComponent(`Hi, I'm interested in the ${product.name}. Is this available? Also, can I get the best price?`)}`}
+      href={`https://wa.me/919892410488?text=${encodeURIComponent(`Hi, I'm interested in the ${product.name}. Is this available? Also, can I get the best price?`)}`}
       target="_blank"
       rel="noopener noreferrer"
       className="flex items-center justify-center gap-2 w-full py-2.5 bg-[#25D366] hover:bg-[#1ebe5d] transition-colors duration-200 font-sans text-[11px] tracking-[0.12em] uppercase text-white font-medium"

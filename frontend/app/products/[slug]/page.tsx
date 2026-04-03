@@ -144,7 +144,7 @@ export default async function ProductPage({
                 const waMsg = encodeURIComponent(
                   `Hi, I'm interested in the ${product.name}. Is this available? Also, can I get the best price?`
                 );
-                const waUrl = `https://wa.me/918169566689?text=${waMsg}`;
+                const waUrl = `https://wa.me/919892410488?text=${waMsg}`;
                 return (
                   <div className="flex flex-wrap gap-3 mb-10">
                     <a href={waUrl} target="_blank" rel="noopener noreferrer"
