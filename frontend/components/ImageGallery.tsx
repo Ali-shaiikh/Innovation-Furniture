@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import type { StrapiImage } from "@/types";
 import { getStrapiImageUrl } from "@/lib/strapi";
@@ -147,7 +148,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
       </div>
 
       {/* ── Lightbox ── */}
-      {lightboxOpen && (
+      {lightboxOpen && createPortal(
         <div
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#0D0A08]/95 backdrop-blur-sm"
           onClick={() => setLightboxOpen(false)}
@@ -209,7 +210,8 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
               </div>
             </>
           )}
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
