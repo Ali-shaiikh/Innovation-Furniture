@@ -17,7 +17,7 @@ async function fetchStrapi<T>(
   options: { revalidate?: number } = {}
 ): Promise<T | null> {
   const url = `${STRAPI_URL}/api${endpoint}`;
-  const { revalidate = 60 } = options;
+  const { revalidate = 3600 } = options;
 
   try {
     const res = await fetch(url, {
@@ -108,7 +108,7 @@ export async function getFeaturedProducts(limit = 6): Promise<Product[]> {
 export async function getSiteSettings(): Promise<SiteSetting | null> {
   const res = await fetchStrapi<StrapiResponse<SiteSetting>>(
     "/site-setting?populate=*",
-    { revalidate: 300 }
+    { revalidate: 86400 }
   );
   return res?.data ?? null;
 }
