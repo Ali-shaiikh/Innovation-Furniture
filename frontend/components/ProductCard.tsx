@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Product } from "@/types";
-import { getStrapiImageUrl, formatINR } from "@/lib/strapi";
+import { getSanityImageUrl, formatINR } from "@/lib/sanity";
 
 // ─── Arrow Icon ────────────────────────────────────────────────────────────────
 
@@ -23,13 +23,13 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const primaryImage  = product.images?.[0];
-  const imageUrl      = primaryImage ? getStrapiImageUrl(primaryImage.url) : null;
-  const imageAlt      = primaryImage?.alternativeText ?? product.name;
+  const imageUrl      = primaryImage ? getSanityImageUrl(primaryImage) : null;
+  const imageAlt      = primaryImage?.alt ?? product.name;
 
   return (
     <div className="product-card group flex flex-col">
     <Link
-      href={`/products/${product.slug}`}
+      href={`/products/${typeof product.slug === "string" ? product.slug : product.slug.current}`}
       className="block flex-1"
       aria-label={`View ${product.name}`}
     >

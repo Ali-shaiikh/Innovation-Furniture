@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { SiteSetting } from "@/types";
-import { getStrapiImageUrl } from "@/lib/strapi";
+import { getSanityImageUrl } from "@/lib/sanity";
 
 // ─── Arrow Icon ────────────────────────────────────────────────────────────────
 
@@ -58,7 +58,7 @@ const DEFAULT_SUBTITLE =
 export default function Hero({ settings }: HeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const heroImageUrl = settings?.hero_image
-    ? getStrapiImageUrl(settings.hero_image.url)
+    ? getSanityImageUrl(settings.hero_image)
     : null;
   const subtitle = settings?.hero_subtitle ?? DEFAULT_SUBTITLE;
 
@@ -96,7 +96,7 @@ export default function Hero({ settings }: HeroProps) {
         {heroImageUrl ? (
           <Image
             src={heroImageUrl}
-            alt={settings?.hero_image?.alternativeText ?? "Innovation Designer Furniture — luxury interior"}
+            alt={settings?.hero_image?.alt ?? "Innovation Designer Furniture — luxury interior"}
             fill
             priority
             quality={90}

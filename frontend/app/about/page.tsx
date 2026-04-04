@@ -4,7 +4,7 @@ import Image from "next/image";
 import NavbarServer from "@/components/NavbarServer";
 import Footer from "@/components/Footer";
 import AnimatedSection, { StaggeredChildren } from "@/components/AnimatedSection";
-import { getSiteSettings } from "@/lib/strapi";
+import { getSiteSettings } from "@/lib/sanity";
 
 export const metadata: Metadata = {
   title: "About Us | Innovation Designer Furniture",

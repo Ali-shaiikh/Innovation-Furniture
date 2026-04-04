@@ -10,7 +10,7 @@ import {
   getProductBySlug,
   getProducts,
   formatINR,
-} from "@/lib/strapi";
+} from "@/lib/sanity";
 
 // ─── Metadata ──────────────────────────────────────────────────────────────────
 
@@ -36,7 +36,7 @@ export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const products = await getProducts();
-  return products.map((p) => ({ slug: p.slug }));
+  return products.map((p) => ({ slug: typeof p.slug === "string" ? p.slug : p.slug.current }));
 }
 
 // ─── Detail Row ────────────────────────────────────────────────────────────────
@@ -68,8 +68,8 @@ export default async function ProductPage({
 
   // Related products from same category
   const relatedProducts = product.category
-    ? (await getProducts({ categorySlug: product.category.slug, limit: 4 }))
-        .filter((p) => p.id !== product.id)
+    ? (await getProducts({ categorySlug: typeof product.category.slug === "string" ? product.category.slug : product.category.slug.current, limit: 4 }))
+        .filter((p) => p._id !== product._id)
         .slice(0, 3)
     : [];
 
@@ -85,7 +85,7 @@ export default async function ProductPage({
             <span className="breadcrumb-sep">/</span>
             {product.category && (
               <>
-                <a href={`/category/${product.category.slug}`}>
+                <a href={`/category/${typeof product.category.slug === "string" ? product.category.slug : product.category.slug.current}`}>
                   {product.category.name}
                 </a>
                 <span className="breadcrumb-sep">/</span>
@@ -109,7 +109,7 @@ export default async function ProductPage({
               {/* Category tag */}
               {product.category && (
                 <Link
-                  href={`/category/${product.category.slug}`}
+                  href={`/category/${typeof product.category.slug === "string" ? product.category.slug : product.category.slug.current}`}
                   className="inline-block font-sans text-[11px] tracking-[0.18em] uppercase text-[#C9A96E] mb-4 hover:text-[#9C7B4A] transition-colors"
                 >
                   {product.category.name}
@@ -225,7 +225,7 @@ export default async function ProductPage({
 
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
                 {relatedProducts.map((p) => (
-                  <ProductCard key={p.id} product={p} />
+                  <ProductCard key={p._id} product={p} />
                 ))}
               </div>
             </div>

@@ -12,7 +12,7 @@ import {
   getSiteSettings,
   getCategories,
   getFeaturedProducts,
-} from "@/lib/strapi";
+} from "@/lib/sanity";
 
 export const metadata: Metadata = {
   title: "Innovation Designer Furniture — Luxury Living, Accessible Price",
@@ -127,7 +127,7 @@ export default async function HomePage() {
               baseDelay={80}
             >
               {featuredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard key={product._id} product={product} />
               ))}
             </StaggeredChildren>
           </div>

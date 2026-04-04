@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Category } from "@/types";
-import { getStrapiImageUrl } from "@/lib/strapi";
+import { getSanityImageUrl } from "@/lib/sanity";
 import AnimatedSection, { StaggeredChildren } from "./AnimatedSection";
 
 // ─── Category Card ─────────────────────────────────────────────────────────────
@@ -12,16 +12,17 @@ const LOCAL_IMAGE_MAP: Record<string, string> = {
 };
 
 function CategoryCard({ category, index }: { category: Category; index: number }) {
-  const localFile = LOCAL_IMAGE_MAP[category.slug] ?? category.slug;
-  // Strapi image takes priority; fall back to /category/{slug}.png if present
+  const slug = typeof category.slug === "string" ? category.slug : category.slug.current;
+  const localFile = LOCAL_IMAGE_MAP[slug] ?? slug;
+  // Sanity image takes priority; fall back to /category/{slug}.png if present
   const imageUrl = category.image
-    ? getStrapiImageUrl(category.image.url)
+    ? getSanityImageUrl(category.image)
     : `/category/${localFile}.png`;
-  const imageAlt = category.image?.alternativeText ?? category.name;
+  const imageAlt = category.image?.alt ?? category.name;
 
   return (
     <Link
-      href={`/category/${category.slug}`}
+      href={`/category/${slug}`}
       className="group relative block overflow-hidden aspect-[3/4]"
       aria-label={`Browse ${category.name}`}
     >
@@ -129,7 +130,7 @@ export default function FeaturedCategories({ categories }: FeaturedCategoriesPro
           staggerMs={80}
         >
           {categories.map((cat, i) => (
-            <CategoryCard key={cat.id} category={cat} index={i} />
+            <CategoryCard key={cat._id} category={cat} index={i} />
           ))}
         </StaggeredChildren>
       </div>

@@ -1,66 +1,54 @@
-// ─── Strapi Base ───────────────────────────────────────────────────────────────
+// ─── Sanity Image ──────────────────────────────────────────────────────────────
 
-export interface StrapiImage {
-  id: number;
-  url: string;
-  alternativeText: string | null;
-  width: number;
-  height: number;
-  formats?: {
-    thumbnail?: { url: string; width: number; height: number };
-    small?:     { url: string; width: number; height: number };
-    medium?:    { url: string; width: number; height: number };
-    large?:     { url: string; width: number; height: number };
+export interface SanityImageAsset {
+  _ref?: string;
+  _type?: string;
+  url?: string;
+  metadata?: {
+    dimensions?: { width: number; height: number };
   };
 }
 
-export interface StrapiResponse<T> {
-  data: T;
-  meta: {
-    pagination?: {
-      page: number;
-      pageSize: number;
-      pageCount: number;
-      total: number;
-    };
-  };
+export interface SanityImage {
+  asset: SanityImageAsset;
+  alt?: string | null;
+  hotspot?: { x: number; y: number };
+  crop?: { top: number; bottom: number; left: number; right: number };
 }
+
+// Keep StrapiImage as alias so existing components don't break
+export type StrapiImage = SanityImage;
 
 // ─── Category ──────────────────────────────────────────────────────────────────
 
 export interface Category {
-  id: number;
-  documentId: string;
+  _id: string;
   name: string;
-  slug: string;
+  slug: { current: string } | string;
   description: string | null;
-  image: StrapiImage | null;
-  createdAt: string;
-  updatedAt: string;
+  order?: number;
+  image: SanityImage | null;
 }
 
 // ─── Product ───────────────────────────────────────────────────────────────────
 
 export interface Product {
-  id: number;
-  documentId: string;
+  _id: string;
   name: string;
-  slug: string;
+  slug: { current: string } | string;
   starting_price: number;
   description: string | null;
   materials: string | null;
   dimensions: string | null;
-  images: StrapiImage[];
+  images: SanityImage[];
   category: Category | null;
-  createdAt: string;
-  updatedAt: string;
 }
 
 // ─── Site Setting JSON sub-types ───────────────────────────────────────────────
 
 export interface HeroStat {
-  value: string; // e.g. "500+"
-  label: string; // e.g. "Designs"
+  value: string;
+  label: string;
 }
 
 export interface WhyUsItem {
@@ -70,39 +58,32 @@ export interface WhyUsItem {
 }
 
 export interface AboutStat {
-  value: string; // e.g. "2015"
-  label: string; // e.g. "Year Founded"
+  value: string;
+  label: string;
 }
 
 export interface AboutValue {
-  number: string; // e.g. "01"
+  number: string;
   title: string;
   description: string;
 }
 
-// ─── Site Setting (single type) ────────────────────────────────────────────────
+// ─── Site Setting ──────────────────────────────────────────────────────────────
 
 export interface SiteSetting {
-  id: number;
-  // Hero
-  hero_title:    string | null;
-  hero_subtitle: string | null;
-  hero_image:    StrapiImage | null;
-  hero_stats:    HeroStat[] | null;
-  // Home — Why Us section
-  why_us_items:  WhyUsItem[] | null;
-  // Home — CTA banner
-  cta_title:    string | null;
-  cta_subtitle: string | null;
-  // About page
-  about_mission: string | null;
-  about_stats:   AboutStat[] | null;
-  about_values:  AboutValue[] | null;
-  // Contact / global
-  contact_email:   string | null;
-  contact_phone:   string | null;
-  contact_address: string | null;
-  // Social
+  hero_title:       string | null;
+  hero_subtitle:    string | null;
+  hero_image:       SanityImage | null;
+  hero_stats:       HeroStat[] | null;
+  why_us_items:     WhyUsItem[] | null;
+  cta_title:        string | null;
+  cta_subtitle:     string | null;
+  about_mission:    string | null;
+  about_stats:      AboutStat[] | null;
+  about_values:     AboutValue[] | null;
+  contact_email:    string | null;
+  contact_phone:    string | null;
+  contact_address:  string | null;
   social_instagram: string | null;
   social_pinterest: string | null;
 }

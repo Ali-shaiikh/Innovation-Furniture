@@ -3,12 +3,12 @@
 import { useState, useCallback, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
-import type { StrapiImage } from "@/types";
-import { getStrapiImageUrl } from "@/lib/strapi";
+import type { SanityImage } from "@/types";
+import { getSanityImageUrl } from "@/lib/sanity";
 import clsx from "clsx";
 
 interface ImageGalleryProps {
-  images: StrapiImage[];
+  images: SanityImage[];
   productName: string;
 }
 
@@ -51,7 +51,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
   }
 
   const activeImage = images[activeIndex];
-  const imageUrl    = getStrapiImageUrl(activeImage.url);
+  const imageUrl    = getSanityImageUrl(activeImage);
 
   const blockContextMenu = (e: React.MouseEvent) => e.preventDefault();
 
@@ -67,7 +67,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
           <Image
             key={imageUrl}
             src={imageUrl}
-            alt={activeImage.alternativeText ?? `${productName} — view ${activeIndex + 1}`}
+            alt={activeImage.alt ?? `${productName} — view ${activeIndex + 1}`}
             fill
             priority={activeIndex === 0}
             sizes="(max-width: 1024px) 100vw, 55vw"
@@ -120,10 +120,10 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
         {images.length > 1 && (
           <div className="grid grid-cols-5 gap-2">
             {images.map((img, i) => {
-              const thumbUrl = getStrapiImageUrl(img.formats?.thumbnail?.url ?? img.url);
+              const thumbUrl = getSanityImageUrl(img);
               return (
                 <button
-                  key={img.id}
+                  key={i}
                   onClick={() => setActiveIndex(i)}
                   aria-label={`View image ${i + 1}`}
                   className={clsx(
@@ -135,7 +135,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
                 >
                   <Image
                     src={thumbUrl}
-                    alt={img.alternativeText ?? `${productName} thumbnail ${i + 1}`}
+                    alt={img.alt ?? `${productName} thumbnail ${i + 1}`}
                     fill
                     sizes="80px"
                     className="object-cover"
@@ -172,7 +172,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
           >
             <Image
               src={imageUrl}
-              alt={activeImage.alternativeText ?? productName}
+              alt={activeImage.alt ?? productName}
               fill
               className="object-contain select-none"
               sizes="100vw"

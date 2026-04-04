@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Category } from "@/types";
-import { getStrapiImageUrl } from "@/lib/strapi";
+import { getSanityImageUrl } from "@/lib/sanity";
 
 // ─── CategoryStrip ─────────────────────────────────────────────────────────────
 // Horizontal strip of category cards: text+arrow left, product image right.
@@ -25,12 +25,13 @@ export default function LibraryCollection({ categories }: LibraryCollectionProps
         style={{ gap: "1px", background: "rgba(61,43,31,0.09)" }}
       >
         {categories.map((cat, i) => {
-          const imageUrl = cat.image ? getStrapiImageUrl(cat.image.url) : null;
+          const imageUrl = cat.image ? getSanityImageUrl(cat.image) : null;
+          const slug = typeof cat.slug === "string" ? cat.slug : cat.slug.current;
 
           return (
             <Link
-              key={cat.id}
-              href={`/category/${cat.slug}`}
+              key={cat._id}
+              href={`/category/${slug}`}
               className="group relative flex flex-1 min-w-[180px] lg:min-w-0 overflow-hidden"
               style={{
                 background: "#F5EFE4",
@@ -57,7 +58,7 @@ export default function LibraryCollection({ categories }: LibraryCollectionProps
                 {imageUrl ? (
                   <Image
                     src={imageUrl}
-                    alt={cat.image?.alternativeText ?? cat.name}
+                    alt={cat.image?.alt ?? cat.name}
                     fill
                     sizes="(max-width: 768px) 35vw, 14vw"
                     className="object-cover object-center transition-transform duration-600 ease-out group-hover:scale-[1.04]"

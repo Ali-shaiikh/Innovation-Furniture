@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getCategories, getProducts } from "@/lib/strapi";
+import { getCategories, getProducts } from "@/lib/sanity";
 
 const BASE_URL = "https://innovationfurniture.in";
 
@@ -10,14 +10,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]);
 
   const categoryUrls = categories.map((cat) => ({
-    url: `${BASE_URL}/category/${cat.slug}`,
+    url: `${BASE_URL}/category/${typeof cat.slug === "string" ? cat.slug : cat.slug.current}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
 
   const productUrls = products.map((p) => ({
-    url: `${BASE_URL}/products/${p.slug}`,
+    url: `${BASE_URL}/products/${typeof p.slug === "string" ? p.slug : p.slug.current}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.7,

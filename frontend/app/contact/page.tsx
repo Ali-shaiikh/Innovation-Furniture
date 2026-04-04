@@ -4,7 +4,7 @@ import NavbarServer from "@/components/NavbarServer";
 import Footer from "@/components/Footer";
 import AnimatedSection from "@/components/AnimatedSection";
 import ContactForm from "@/components/ContactForm";
-import { getSiteSettings } from "@/lib/strapi";
+import { getSiteSettings } from "@/lib/sanity";
 
 export const metadata: Metadata = {
   title: "Contact | Innovation Designer Furniture",

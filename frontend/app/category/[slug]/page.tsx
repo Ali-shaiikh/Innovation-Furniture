@@ -4,7 +4,7 @@ import NavbarServer from "@/components/NavbarServer";
 import ProductCard from "@/components/ProductCard";
 import AnimatedSection, { StaggeredChildren } from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
-import { getCategoryBySlug, getProducts, getCategories, getStrapiImageUrl } from "@/lib/strapi";
+import { getCategoryBySlug, getProducts, getCategories, getSanityImageUrl } from "@/lib/sanity";
 
 // ─── Metadata ──────────────────────────────────────────────────────────────────
 
@@ -31,7 +31,7 @@ export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const categories = await getCategories();
-  return categories.map((c) => ({ slug: c.slug }));
+  return categories.map((c) => ({ slug: typeof c.slug === "string" ? c.slug : c.slug.current }));
 }
 
 // ─── Empty State ───────────────────────────────────────────────────────────────
@@ -69,7 +69,7 @@ export default async function CategoryPage({
   const categoryName = category?.name ?? slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
   const coverImageUrl = category?.image
-    ? getStrapiImageUrl(category.image.url)
+    ? getSanityImageUrl(category.image)
     : null;
 
   return (
@@ -82,7 +82,7 @@ export default async function CategoryPage({
         {coverImageUrl ? (
           <Image
             src={coverImageUrl}
-            alt={category?.image?.alternativeText ?? categoryName}
+            alt={category?.image?.alt ?? categoryName}
             fill
             priority
             className="object-cover"
@@ -141,7 +141,7 @@ export default async function CategoryPage({
               staggerMs={70}
             >
               {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard key={product._id} product={product} />
               ))}
             </StaggeredChildren>
           )}

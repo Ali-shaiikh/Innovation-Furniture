@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getCategories, getSiteSettings } from "@/lib/strapi";
+import { getCategories, getSiteSettings } from "@/lib/sanity";
 
 // ─── Social Icons ──────────────────────────────────────────────────────────────
 
@@ -86,9 +86,9 @@ export default async function Footer() {
               </h4>
               <ul className="space-y-3">
                 {categories.map((cat) => (
-                  <li key={cat.id}>
+                  <li key={cat._id}>
                     <Link
-                      href={`/category/${cat.slug}`}
+                      href={`/category/${typeof cat.slug === "string" ? cat.slug : cat.slug.current}`}
                       className="font-sans text-sm text-[rgba(245,239,228,0.55)] hover:text-[#C9A96E] transition-colors duration-300 font-light"
                     >
                       {cat.name}

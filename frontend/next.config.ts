@@ -3,23 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
-      // Local Strapi (development)
-      {
-        protocol: "http",
-        hostname: "localhost",
-        port: "1337",
-        pathname: "/uploads/**",
-      },
-      // Strapi Cloud — API domain
+      // Sanity image CDN
       {
         protocol: "https",
-        hostname: "*.strapiapp.com",
-        pathname: "/**",
-      },
-      // Strapi Cloud — media/image CDN
-      {
-        protocol: "https",
-        hostname: "*.media.strapiapp.com",
+        hostname: "cdn.sanity.io",
         pathname: "/**",
       },
     ],
