@@ -52,6 +52,8 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
   const activeImage = images[activeIndex];
   const imageUrl    = getStrapiImageUrl(activeImage.url);
 
+  const blockContextMenu = (e: React.MouseEvent) => e.preventDefault();
+
   return (
     <>
       <div className="space-y-3">
@@ -59,6 +61,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
         <div
           className="relative aspect-[4/3] overflow-hidden bg-[#F0E9DF] group cursor-zoom-in"
           onClick={() => setLightboxOpen(true)}
+          onContextMenu={blockContextMenu}
         >
           <Image
             key={imageUrl}
@@ -67,8 +70,11 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
             fill
             priority={activeIndex === 0}
             sizes="(max-width: 1024px) 100vw, 55vw"
-            className="object-cover transition-opacity duration-500"
+            className="object-cover transition-opacity duration-500 select-none"
+            draggable={false}
           />
+          {/* Transparent overlay blocks right-click save on the image element */}
+          <div className="absolute inset-0 z-10" onContextMenu={blockContextMenu} />
 
           {/* Expand hint */}
           <div className="absolute top-3 right-3 w-8 h-8 bg-[#1A1410]/60 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -161,15 +167,18 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
           <div
             className="relative w-full h-full max-w-5xl max-h-[90vh] mx-6"
             onClick={(e) => e.stopPropagation()}
+            onContextMenu={blockContextMenu}
           >
             <Image
               src={imageUrl}
               alt={activeImage.alternativeText ?? productName}
               fill
-              className="object-contain"
+              className="object-contain select-none"
               sizes="100vw"
               priority
+              draggable={false}
             />
+            <div className="absolute inset-0 z-10" onContextMenu={blockContextMenu} />
           </div>
 
           {/* Prev / Next in lightbox */}
