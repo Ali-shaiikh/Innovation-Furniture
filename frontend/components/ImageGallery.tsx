@@ -149,7 +149,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
       {/* ── Lightbox ── */}
       {lightboxOpen && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0D0A08]/95 backdrop-blur-sm"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#0D0A08]/95 backdrop-blur-sm"
           onClick={() => setLightboxOpen(false)}
         >
           {/* Close button */}
