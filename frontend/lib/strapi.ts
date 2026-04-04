@@ -31,16 +31,13 @@ async function fetchStrapi<T>(
 
     if (!res.ok) {
       console.error(`Strapi fetch error [${res.status}]: ${url}`);
-      // For server errors (503 = sleeping), throw so Next.js keeps the stale cache
-      if (res.status >= 500) throw new Error(`Strapi unavailable: ${res.status}`);
       return null;
     }
 
     return res.json() as Promise<T>;
   } catch (err) {
     console.error(`Strapi network error: ${url}`, err);
-    // Re-throw so Next.js ISR keeps serving the last successful cached response
-    throw err;
+    return null;
   }
 }
 
