@@ -1,12 +1,16 @@
 "use client";
 
-import { NextStudio } from "next-sanity/studio";
+import dynamic from "next/dynamic";
 import config from "@/sanity.config";
 
-export const dynamic = "force-dynamic";
+export const dynamic_ = "force-dynamic";
+
+const Studio = dynamic(() => import("sanity").then((m) => m.Studio), { ssr: false });
 
 export default function StudioPage() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const Studio = NextStudio as any;
-  return <Studio config={config} />;
+  return (
+    <div style={{ height: "100vh" }}>
+      <Studio config={config} />
+    </div>
+  );
 }

@@ -14,7 +14,7 @@
     "clsx": "^2.1.1",
     "framer-motion": "^11.15.0",
     "next": "^15.1.0",
-    "next-sanity": "^12.2.1",
+    "next-sanity": "^9.12.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sanity": "^5.19.0"
