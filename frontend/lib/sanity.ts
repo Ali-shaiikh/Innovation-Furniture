@@ -17,9 +17,14 @@ export const sanityClient = createClient({
 
 const builder = imageUrlBuilder(sanityClient);
 
-export function getSanityImageUrl(source: SanityImageSource | null | undefined): string {
+export function getSanityImageUrl(
+  source: SanityImageSource | null | undefined,
+  { width, quality }: { width?: number; quality?: number } = {}
+): string {
   if (!source) return "";
-  return builder.image(source).auto("format").url();
+  let img = builder.image(source).auto("format").fit("max").quality(quality ?? 90);
+  if (width) img = img.width(width);
+  return img.url();
 }
 
 // ─── Format Currency ───────────────────────────────────────────────────────────

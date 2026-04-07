@@ -51,7 +51,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
   }
 
   const activeImage = images[activeIndex];
-  const imageUrl    = getSanityImageUrl(activeImage);
+  const imageUrl    = getSanityImageUrl(activeImage, { width: 1400, quality: 92 });
 
   const blockContextMenu = (e: React.MouseEvent) => e.preventDefault();
 
@@ -120,7 +120,7 @@ export default function ImageGallery({ images, productName }: ImageGalleryProps)
         {images.length > 1 && (
           <div className="grid grid-cols-5 gap-2">
             {images.map((img, i) => {
-              const thumbUrl = getSanityImageUrl(img);
+              const thumbUrl = getSanityImageUrl(img, { width: 160, quality: 80 });
               return (
                 <button
                   key={i}

@@ -23,7 +23,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const primaryImage  = product.images?.[0];
-  const imageUrl      = primaryImage ? getSanityImageUrl(primaryImage) : null;
+  const imageUrl      = primaryImage ? getSanityImageUrl(primaryImage, { width: 800, quality: 90 }) : null;
   const imageAlt      = primaryImage?.alt ?? product.name;
 
   return (
