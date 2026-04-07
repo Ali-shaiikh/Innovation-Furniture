@@ -46,7 +46,7 @@ export async function getCategories(): Promise<Category[]> {
       image { asset->, alt, hotspot, crop }
     }`,
     {},
-    { next: { revalidate: 3600 } }
+    { next: { revalidate: 120 } }
   );
 }
 
@@ -57,7 +57,7 @@ export async function getCategoryBySlug(slug: string): Promise<Category | null> 
       image { asset->, alt, hotspot, crop }
     }`,
     { slug },
-    { next: { revalidate: 3600 } }
+    { next: { revalidate: 120 } }
   );
   return results ?? null;
 }
@@ -84,7 +84,7 @@ export async function getProducts(params?: {
       category->{ _id, name, slug }
     }`,
     { categorySlug: params?.categorySlug ?? "" },
-    { next: { revalidate: 3600 } }
+    { next: { revalidate: 120 } }
   );
 }
 
@@ -96,7 +96,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
       category->{ _id, name, slug }
     }`,
     { slug },
-    { next: { revalidate: 3600 } }
+    { next: { revalidate: 120 } }
   );
   return result ?? null;
 }
