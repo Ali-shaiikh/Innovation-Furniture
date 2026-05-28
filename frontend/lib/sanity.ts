@@ -22,9 +22,15 @@ export function getSanityImageUrl(
   { width, quality }: { width?: number; quality?: number } = {}
 ): string {
   if (!source) return "";
-  let img = builder.image(source).auto("format").fit("max").quality(quality ?? 90);
-  if (width) img = img.width(width);
-  return img.url();
+  // Guard against images with null/missing asset references
+  if (!source.asset?._ref && !source.asset?.url) return "";
+  try {
+    let img = builder.image(source).auto("format").fit("max").quality(quality ?? 90);
+    if (width) img = img.width(width);
+    return img.url() ?? "";
+  } catch {
+    return "";
+  }
 }
 
 // ─── Format Currency ───────────────────────────────────────────────────────────
