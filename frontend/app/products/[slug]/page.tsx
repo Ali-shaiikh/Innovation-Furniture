@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import {
   getProductBySlug,
   getProducts,
+  getSanityImageUrl,
   formatINR,
 } from "@/lib/sanity";
 
@@ -66,6 +67,23 @@ export default async function ProductPage({
   const product = await getProductBySlug(slug);
   if (!product) notFound();
 
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.description ?? `${product.name} — premium designer furniture by Innovation Designer Furniture`,
+    image: product.images?.[0] ? getSanityImageUrl(product.images[0], { width: 1200 }) : undefined,
+    brand: { "@type": "Brand", name: "Innovation Designer Furniture" },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "INR",
+      price: product.starting_price,
+      availability: "https://schema.org/InStock",
+      seller: { "@type": "FurnitureStore", name: "Innovation Designer Furniture" },
+      url: `https://innovationfurniture.in/products/${typeof product.slug === "string" ? product.slug : product.slug.current}`,
+    },
+  };
+
   // Related products from same category
   const relatedProducts = product.category
     ? (await getProducts({ categorySlug: typeof product.category.slug === "string" ? product.category.slug : product.category.slug.current, limit: 4 }))
@@ -76,6 +94,11 @@ export default async function ProductPage({
   return (
     <>
       <NavbarServer />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
 
       <div className="pt-[80px]">
         {/* ── Breadcrumb ──────────────────────────────────────────────────── */}

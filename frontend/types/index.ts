@@ -42,6 +42,7 @@ export interface Product {
   dimensions: string | null;
   images: SanityImage[];
   category: Category | null;
+  panorama_url?: string | null;
 }
 
 // ─── Site Setting JSON sub-types ───────────────────────────────────────────────

@@ -92,6 +92,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
   const result = await sanityClient.fetch(
     `*[_type == "product" && slug.current == $slug][0] {
       _id, name, slug, starting_price, description, materials, dimensions,
+      panorama_url,
       images[] { asset->, alt, hotspot, crop },
       category->{ _id, name, slug }
     }`,
@@ -103,6 +104,18 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 
 export async function getFeaturedProducts(limit = 6): Promise<Product[]> {
   return getProducts({ limit });
+}
+
+export async function getPanoramaProducts(): Promise<Product[]> {
+  return sanityClient.fetch(
+    `*[_type == "product" && defined(panorama_url) && panorama_url != ""] | order(_createdAt asc) {
+      _id, name, slug, starting_price, panorama_url,
+      images[] { asset->, alt, hotspot, crop },
+      category->{ _id, name, slug }
+    }`,
+    {},
+    { next: { revalidate: 120 } }
+  );
 }
 
 // ─── Site Settings ─────────────────────────────────────────────────────────────
