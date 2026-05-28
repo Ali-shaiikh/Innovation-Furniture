@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import dynamic from 'next/dynamic';
+import VRViewerClient from '@/components/VRViewerClient';
 import { getProductBySlug, getPanoramaProducts } from '@/lib/sanity';
-
-const VRViewer = dynamic(() => import('@/components/VRViewer'), { ssr: false });
 
 // ── Metadata ──────────────────────────────────────────────────────────────────
 
@@ -62,7 +60,7 @@ export default async function VRProductPage({
         inset: 0,
       }}
     >
-      <VRViewer
+      <VRViewerClient
         src={product.panorama_url}
         title={product.name}
         subtitle={categorySlug ? product.category?.name : undefined}
