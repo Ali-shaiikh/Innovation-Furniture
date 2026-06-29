@@ -4,7 +4,7 @@ import NavbarServer from "@/components/NavbarServer";
 import Hero from "@/components/Hero";
 import FeaturedCategories from "@/components/FeaturedCategories";
 import ProductCard from "@/components/ProductCard";
-import AnimatedSection, { StaggeredChildren } from "@/components/AnimatedSection";
+import AnimatedSection, { StaggeredChildren, RevealText } from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
 import Testimonials from "@/components/Testimonials";
 import type { WhyUsItem } from "@/types";
@@ -96,16 +96,15 @@ export default async function HomePage() {
         <section className="section-pad bg-[#FAF7F2]" aria-labelledby="products-heading">
           <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
 
-            <AnimatedSection className="mb-12 lg:mb-16">
-              {/* Header row: spacer | FEATURED COLLECTION | VIEW ALL */}
+            <div className="mb-12 lg:mb-16">
               <div className="flex items-center justify-between gap-4 mb-3">
                 <div className="flex-1" />
-                <h2
-                  id="products-heading"
+                <RevealText
+                  as="h2"
                   className="font-sans text-[0.78rem] lg:text-[0.88rem] font-[500] tracking-[0.38em] text-[#3D2B1F] uppercase text-center"
                 >
-                  Featured Collection
-                </h2>
+                  <span id="products-heading">Featured Collection</span>
+                </RevealText>
                 <div className="flex-1 flex justify-end">
                   <Link
                     href="/category/sofas"
@@ -115,11 +114,12 @@ export default async function HomePage() {
                   </Link>
                 </div>
               </div>
-              {/* Gold underline */}
-              <div className="flex justify-center">
-                <div className="h-px w-14 bg-[#C9A96E] opacity-65" />
-              </div>
-            </AnimatedSection>
+              <AnimatedSection animation="fade-in" delay={200}>
+                <div className="flex justify-center">
+                  <div className="h-px w-14 bg-[#C9A96E] opacity-65" />
+                </div>
+              </AnimatedSection>
+            </div>
 
             <StaggeredChildren
               className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4"
@@ -149,16 +149,17 @@ export default async function HomePage() {
           />
 
           <div className="relative max-w-[1440px] mx-auto px-6 lg:px-12">
-            <AnimatedSection className="text-center mb-14">
-              <p className="eyebrow mb-3">Why Innovation</p>
-              <h2
-                id="why-heading"
-                className="font-serif text-[2.2rem] lg:text-[3rem] font-light text-[#F5EFE4]"
-              >
-                The Difference You&apos;ll Feel
-              </h2>
-              <div className="divider-gold mt-4 max-w-xs mx-auto opacity-40" />
-            </AnimatedSection>
+            <div className="text-center mb-14">
+              <AnimatedSection animation="fade-in">
+                <p className="eyebrow mb-3">Why Innovation</p>
+              </AnimatedSection>
+              <RevealText as="h2" delay={100} className="font-serif text-[2.2rem] lg:text-[3rem] font-light text-[#F5EFE4]">
+                <span id="why-heading">The Difference You&apos;ll Feel</span>
+              </RevealText>
+              <AnimatedSection animation="fade-in" delay={400}>
+                <div className="divider-gold mt-4 max-w-xs mx-auto opacity-40" />
+              </AnimatedSection>
+            </div>
 
             <StaggeredChildren
               className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"

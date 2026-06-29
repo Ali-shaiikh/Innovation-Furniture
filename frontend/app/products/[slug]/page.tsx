@@ -67,26 +67,83 @@ export default async function ProductPage({
   const product = await getProductBySlug(slug);
   if (!product) notFound();
 
+  const productSlug = typeof product.slug === "string" ? product.slug : product.slug.current;
+  const categorySlug = product.category
+    ? (typeof product.category.slug === "string" ? product.category.slug : product.category.slug.current)
+    : null;
+
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
+    "@id": `https://innovationfurniture.in/products/${productSlug}`,
     name: product.name,
     description: product.description ?? `${product.name} — premium designer furniture by Innovation Designer Furniture`,
-    image: product.images?.[0] ? getSanityImageUrl(product.images[0], { width: 1200 }) : undefined,
-    brand: { "@type": "Brand", name: "Innovation Designer Furniture" },
+    sku: productSlug,
+    image: product.images?.map((img) => getSanityImageUrl(img, { width: 1200 })).filter(Boolean),
+    brand: {
+      "@type": "Brand",
+      name: "Innovation Designer Furniture",
+      url: "https://innovationfurniture.in",
+    },
+    manufacturer: {
+      "@type": "Organization",
+      name: "Innovation Designer Furniture",
+      url: "https://innovationfurniture.in",
+    },
+    ...(product.category && {
+      category: product.category.name,
+    }),
+    ...(product.materials && {
+      material: product.materials,
+    }),
     offers: {
       "@type": "Offer",
       priceCurrency: "INR",
       price: product.starting_price,
+      priceValidUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
       availability: "https://schema.org/InStock",
-      seller: { "@type": "FurnitureStore", name: "Innovation Designer Furniture" },
-      url: `https://innovationfurniture.in/products/${typeof product.slug === "string" ? product.slug : product.slug.current}`,
+      itemCondition: "https://schema.org/NewCondition",
+      seller: {
+        "@type": "FurnitureStore",
+        name: "Innovation Designer Furniture",
+        url: "https://innovationfurniture.in",
+      },
+      url: `https://innovationfurniture.in/products/${productSlug}`,
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        shippingRate: { "@type": "MonetaryAmount", value: "0", currency: "INR" },
+        shippingDestination: {
+          "@type": "DefinedRegion",
+          addressCountry: "IN",
+        },
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+          businessDays: { "@type": "QuantitativeValue", minValue: 28, maxValue: 42 },
+        },
+      },
     },
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://innovationfurniture.in" },
+      ...(product.category && categorySlug
+        ? [{ "@type": "ListItem", position: 2, name: product.category.name, item: `https://innovationfurniture.in/category/${categorySlug}` }]
+        : []),
+      {
+        "@type": "ListItem",
+        position: product.category ? 3 : 2,
+        name: product.name,
+        item: `https://innovationfurniture.in/products/${productSlug}`,
+      },
+    ],
   };
 
   // Related products from same category
   const relatedProducts = product.category
-    ? (await getProducts({ categorySlug: typeof product.category.slug === "string" ? product.category.slug : product.category.slug.current, limit: 4 }))
+    ? (await getProducts({ categorySlug: categorySlug ?? "", limit: 4 }))
         .filter((p) => p._id !== product._id)
         .slice(0, 3)
     : [];
@@ -99,6 +156,10 @@ export default async function ProductPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
 
       <div className="pt-[80px]">
         {/* ── Breadcrumb ──────────────────────────────────────────────────── */}
@@ -106,9 +167,9 @@ export default async function ProductPage({
           <nav className="breadcrumb">
             <a href="/">Home</a>
             <span className="breadcrumb-sep">/</span>
-            {product.category && (
+            {product.category && categorySlug && (
               <>
-                <a href={`/category/${typeof product.category.slug === "string" ? product.category.slug : product.category.slug.current}`}>
+                <a href={`/category/${categorySlug}`}>
                   {product.category.name}
                 </a>
                 <span className="breadcrumb-sep">/</span>
@@ -130,9 +191,9 @@ export default async function ProductPage({
             {/* Right: Info */}
             <div>
               {/* Category tag */}
-              {product.category && (
+              {product.category && categorySlug && (
                 <Link
-                  href={`/category/${typeof product.category.slug === "string" ? product.category.slug : product.category.slug.current}`}
+                  href={`/category/${categorySlug}`}
                   className="inline-block font-sans text-[11px] tracking-[0.18em] uppercase text-[#C9A96E] mb-4 hover:text-[#9C7B4A] transition-colors"
                 >
                   {product.category.name}

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Jost } from "next/font/google";
 import Script from "next/script";
+import IntroLoader from "@/components/IntroLoader";
 import "./globals.css";
 
 // ─── Fonts ─────────────────────────────────────────────────────────────────────
@@ -40,6 +41,14 @@ export const metadata: Metadata = {
     "replica designer furniture",
     "modern furniture India",
     "Innovation Designer Furniture",
+    "furniture store Mumbai",
+    "luxury furniture Mumbai",
+    "designer furniture Mumbai",
+    "furniture store Pune",
+    "luxury furniture Pune",
+    "best furniture company Mumbai",
+    "premium sofa Mumbai",
+    "designer furniture Hyderabad",
   ],
   openGraph: {
     type:        "website",
@@ -75,6 +84,92 @@ export const viewport: Viewport = {
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
+const LOCAL_BUSINESS_SCHEMA = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["FurnitureStore", "Store", "LocalBusiness"],
+      "@id": "https://innovationfurniture.in/#business",
+      "name": "Innovation Designer Furniture",
+      "alternateName": ["IDF", "Innovation Furniture", "Innovation Designer Furniture Mumbai"],
+      "url": "https://innovationfurniture.in",
+      "logo": "https://innovationfurniture.in/logo3.svg",
+      "image": "https://innovationfurniture.in/og-image.jpg",
+      "description": "Premium designer furniture store in Mumbai. Luxury sofas, dining tables, beds and accent chairs — inspired by the world's finest makers at prices that make sense for Indian homes.",
+      "telephone": "+919892410488",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Office No. 406, 4th Floor, Aaradhya Primus Building, Western Express Highway, near Thakur Mall, Ketkipada, Dahisar East",
+        "addressLocality": "Mumbai",
+        "addressRegion": "Maharashtra",
+        "postalCode": "400068",
+        "addressCountry": "IN",
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "19.2432",
+        "longitude": "72.8649",
+      },
+      "hasMap": "https://maps.google.com/?q=Innovation+Designer+Furniture+Dahisar+East+Mumbai",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+919892410488",
+        "contactType": "sales",
+        "areaServed": "IN",
+        "availableLanguage": ["English", "Hindi", "Marathi"],
+      },
+      "areaServed": [
+        { "@type": "City", "name": "Mumbai" },
+        { "@type": "City", "name": "Navi Mumbai" },
+        { "@type": "City", "name": "Thane" },
+        { "@type": "City", "name": "Pune" },
+        { "@type": "City", "name": "Hyderabad" },
+        { "@type": "State", "name": "Maharashtra" },
+        { "@type": "Country", "name": "India" },
+      ],
+      "priceRange": "₹₹–₹₹₹",
+      "currenciesAccepted": "INR",
+      "paymentAccepted": "Cash, Credit Card, Debit Card, UPI, Bank Transfer",
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+          "opens": "10:00",
+          "closes": "19:00",
+        },
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Designer Furniture Collection",
+        "itemListElement": [
+          { "@type": "OfferCatalog", "name": "Sofas & Sectionals" },
+          { "@type": "OfferCatalog", "name": "Dining Tables & Chairs" },
+          { "@type": "OfferCatalog", "name": "Beds & Bedroom Furniture" },
+          { "@type": "OfferCatalog", "name": "Accent Chairs" },
+          { "@type": "OfferCatalog", "name": "Wardrobes & Storage" },
+        ],
+      },
+      "sameAs": [],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://innovationfurniture.in/#website",
+      "url": "https://innovationfurniture.in",
+      "name": "Innovation Designer Furniture",
+      "description": "Premium designer furniture for Indian homes",
+      "publisher": { "@id": "https://innovationfurniture.in/#business" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://innovationfurniture.in/products/{search_term_string}",
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ],
+};
+
 // ─── Root Layout ───────────────────────────────────────────────────────────────
 
 export default function RootLayout({
@@ -85,6 +180,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorant.variable} ${jost.variable}`}>
       <body className="page-wrapper antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_SCHEMA) }}
+        />
+        <IntroLoader />
         {children}
 
         {/* Google Analytics — only loads when NEXT_PUBLIC_GA_ID is set */}

@@ -285,7 +285,51 @@ h1, h2, h3, h4 {
   opacity: 0.6;
 }
 
-/* ─── Stagger Animations ────────────────────────────────────────────────────── */
+/* ─── Intro Loader Animations ───────────────────────────────────────────────── */
+@keyframes introLogoIn {
+  from { opacity: 0; transform: scale(0.78) translateY(14px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);    }
+}
+@keyframes introLineGrow {
+  from { width: 0;    opacity: 0; }
+  to   { width: 56px; opacity: 1; }
+}
+@keyframes introFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+@keyframes introGlow {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1);   }
+}
+
+/* ─── Scroll Reveal ─────────────────────────────────────────────────────────── */
+
+/* Text-mask reveal: parent clips, child slides up from below */
+.reveal-parent {
+  overflow: hidden;
+}
+.reveal-child {
+  display: block;
+  transform: translateY(108%);
+  transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.reveal-child.is-visible {
+  transform: translateY(0);
+}
+
+/* Fade + rise (enhanced — bigger travel) */
+.scroll-fade-up {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.9s var(--ease-luxury), transform 0.9s var(--ease-luxury);
+}
+.scroll-fade-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger Animations ──────────────────────────────────────────────────────── */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -314,10 +358,10 @@ h1, h2, h3, h4 {
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.8s var(--ease-luxury) forwards;
+  animation: fadeInUp 0.9s var(--ease-luxury) forwards;
 }
 .animate-fade-in {
-  animation: fadeIn 0.6s ease forwards;
+  animation: fadeIn 0.7s ease forwards;
 }
 
 /* ─── Delay utilities ───────────────────────────────────────────────────────── */
