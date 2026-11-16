@@ -12,6 +12,7 @@ import {
   getSanityImageUrl,
   formatINR,
 } from "@/lib/sanity";
+import { baseOpenGraph, metaDescription } from "@/lib/seo";
 
 // ─── Metadata ──────────────────────────────────────────────────────────────────
 
@@ -24,11 +25,23 @@ export async function generateMetadata({
   const product = await getProductBySlug(slug);
   if (!product) return { title: "Product Not Found" };
 
+  const description = metaDescription(
+    product.description ??
+      `${product.name} — premium designer furniture starting at ${formatINR(product.starting_price)}`
+  );
+  const ogImage = getSanityImageUrl(product.images?.[0], { width: 1200 });
+
   return {
-    title: `${product.name} | Innovation Designer Furniture`,
-    description:
-      product.description ??
-      `${product.name} — premium designer furniture starting at ${formatINR(product.starting_price)}`,
+    title: product.name,
+    description,
+    alternates: { canonical: `/products/${slug}` },
+    openGraph: {
+      ...baseOpenGraph,
+      title: product.name,
+      description,
+      url: `/products/${slug}`,
+      ...(ogImage && { images: [{ url: ogImage, alt: product.name }] }),
+    },
   };
 }
 
@@ -75,7 +88,7 @@ export default async function ProductPage({
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
-    "@id": `https://innovationfurniture.in/products/${productSlug}`,
+    "@id": `https://www.innovationfurniture.in/products/${productSlug}`,
     name: product.name,
     description: product.description ?? `${product.name} — premium designer furniture by Innovation Designer Furniture`,
     sku: productSlug,
@@ -83,12 +96,12 @@ export default async function ProductPage({
     brand: {
       "@type": "Brand",
       name: "Innovation Designer Furniture",
-      url: "https://innovationfurniture.in",
+      url: "https://www.innovationfurniture.in",
     },
     manufacturer: {
       "@type": "Organization",
       name: "Innovation Designer Furniture",
-      url: "https://innovationfurniture.in",
+      url: "https://www.innovationfurniture.in",
     },
     ...(product.category && {
       category: product.category.name,
@@ -106,9 +119,9 @@ export default async function ProductPage({
       seller: {
         "@type": "FurnitureStore",
         name: "Innovation Designer Furniture",
-        url: "https://innovationfurniture.in",
+        url: "https://www.innovationfurniture.in",
       },
-      url: `https://innovationfurniture.in/products/${productSlug}`,
+      url: `https://www.innovationfurniture.in/products/${productSlug}`,
       shippingDetails: {
         "@type": "OfferShippingDetails",
         shippingRate: { "@type": "MonetaryAmount", value: "0", currency: "INR" },
@@ -128,15 +141,15 @@ export default async function ProductPage({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://innovationfurniture.in" },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://www.innovationfurniture.in" },
       ...(product.category && categorySlug
-        ? [{ "@type": "ListItem", position: 2, name: product.category.name, item: `https://innovationfurniture.in/category/${categorySlug}` }]
+        ? [{ "@type": "ListItem", position: 2, name: product.category.name, item: `https://www.innovationfurniture.in/category/${categorySlug}` }]
         : []),
       {
         "@type": "ListItem",
         position: product.category ? 3 : 2,
         name: product.name,
-        item: `https://innovationfurniture.in/products/${productSlug}`,
+        item: `https://www.innovationfurniture.in/products/${productSlug}`,
       },
     ],
   };

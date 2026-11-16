@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
         access_key: accessKey,
         subject: `New enquiry from ${name} — Innovation Designer Furniture`,
         from_name: "IDF Website",
-        redirect: "https://innovationfurniture.in/contact",
+        redirect: "https://www.innovationfurniture.in/contact",
         name,
         email,
         phone: phone || "—",

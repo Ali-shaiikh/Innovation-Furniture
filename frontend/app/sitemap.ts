@@ -1,34 +1,39 @@
 import type { MetadataRoute } from "next";
 import { getCategories, getProducts } from "@/lib/sanity";
+import { SITE_URL } from "@/lib/seo";
 
-const BASE_URL = "https://innovationfurniture.in";
+const slugOf = (s: { current: string } | string) => (typeof s === "string" ? s : s.current);
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [categories, products] = await Promise.all([
-    getCategories(),
-    getProducts(),
-  ]);
+  const [categories, products] = await Promise.all([getCategories(), getProducts()]);
 
-  const categoryUrls = categories.map((cat) => ({
-    url: `${BASE_URL}/category/${typeof cat.slug === "string" ? cat.slug : cat.slug.current}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.8,
-  }));
-
+  // lastModified comes from Sanity's real edit time — never "now", which search engines learn to ignore.
   const productUrls = products.map((p) => ({
-    url: `${BASE_URL}/products/${typeof p.slug === "string" ? p.slug : p.slug.current}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.7,
+    url: `${SITE_URL}/products/${slugOf(p.slug)}`,
+    ...(p._updatedAt && { lastModified: new Date(p._updatedAt) }),
   }));
+
+  const categoryUrls = categories.map((cat) => {
+    const slug = slugOf(cat.slug);
+    const times = products
+      .filter((p) => p.category && slugOf(p.category.slug) === slug)
+      .map((p) => p._updatedAt)
+      .concat(cat._updatedAt)
+      .filter((t): t is string => Boolean(t))
+      .sort();
+    const latest = times[times.length - 1];
+    return {
+      url: `${SITE_URL}/category/${slug}`,
+      ...(latest && { lastModified: new Date(latest) }),
+    };
+  });
 
   return [
-    { url: BASE_URL,                                   lastModified: new Date(), changeFrequency: "daily",   priority: 1.0 },
-    { url: `${BASE_URL}/furniture-store-mumbai`,       lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE_URL}/furniture-store-pune`,         lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE_URL}/about`,                        lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 },
-    { url: `${BASE_URL}/contact`,                      lastModified: new Date(), changeFrequency: "monthly", priority: 0.6 },
+    { url: SITE_URL },
+    { url: `${SITE_URL}/furniture-store-mumbai` },
+    { url: `${SITE_URL}/furniture-store-pune` },
+    { url: `${SITE_URL}/about` },
+    { url: `${SITE_URL}/contact` },
     ...categoryUrls,
     ...productUrls,
   ];

@@ -3,9 +3,10 @@ import Link from "next/link";
 import NavbarServer from "@/components/NavbarServer";
 import Footer from "@/components/Footer";
 import { getCategories } from "@/lib/sanity";
+import { baseOpenGraph } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Luxury Furniture Store in Mumbai | Innovation Designer Furniture",
+  title: "Luxury Furniture Store in Mumbai",
   description:
     "Shop premium designer furniture in Mumbai. Innovation Designer Furniture offers luxury sofas, dining tables, beds & accent chairs — inspired by world-class makers, priced for Indian homes.",
   keywords: [
@@ -21,13 +22,14 @@ export const metadata: Metadata = {
     "designer dining table Mumbai",
   ],
   openGraph: {
+    ...baseOpenGraph,
     title: "Luxury Furniture Store in Mumbai | Innovation Designer Furniture",
     description:
       "Premium designer furniture delivered across Mumbai. Luxury sofas, dining tables & accent chairs at prices that make sense.",
-    url: "https://innovationfurniture.in/furniture-store-mumbai",
+    url: "https://www.innovationfurniture.in/furniture-store-mumbai",
   },
   alternates: {
-    canonical: "https://innovationfurniture.in/furniture-store-mumbai",
+    canonical: "https://www.innovationfurniture.in/furniture-store-mumbai",
   },
 };
 

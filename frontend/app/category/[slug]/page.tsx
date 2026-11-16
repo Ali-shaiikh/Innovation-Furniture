@@ -5,6 +5,7 @@ import ProductCard from "@/components/ProductCard";
 import AnimatedSection, { StaggeredChildren } from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
 import { getCategoryBySlug, getProducts, getCategories, getSanityImageUrl } from "@/lib/sanity";
+import { SITE_URL, baseOpenGraph, metaDescription } from "@/lib/seo";
 
 // ─── Metadata ──────────────────────────────────────────────────────────────────
 
@@ -17,11 +18,16 @@ export async function generateMetadata({
   const category = await getCategoryBySlug(slug);
   if (!category) return { title: "Category Not Found" };
 
+  const description = metaDescription(
+    category.description ??
+      `Browse our premium ${category.name.toLowerCase()} collection. Luxury design at accessible prices for Indian homes.`
+  );
+
   return {
-    title: `${category.name} | Innovation Designer Furniture`,
-    description:
-      category.description ??
-      `Browse our premium ${category.name.toLowerCase()} collection. Luxury design at accessible prices for Indian homes.`,
+    title: `Designer ${category.name}`,
+    description,
+    alternates: { canonical: `/category/${slug}` },
+    openGraph: { ...baseOpenGraph, title: `Designer ${category.name}`, description, url: `/category/${slug}` },
   };
 }
 
@@ -72,9 +78,44 @@ export default async function CategoryPage({
     ? getSanityImageUrl(category.image)
     : null;
 
+  const slugOf = (s: { current: string } | string) => (typeof s === "string" ? s : s.current);
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: categoryName, item: `${SITE_URL}/category/${slug}` },
+    ],
+  };
+
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: categoryName,
+    numberOfItems: products.length,
+    itemListElement: products.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: p.name,
+      url: `${SITE_URL}/products/${slugOf(p.slug)}`,
+    })),
+  };
+
   return (
     <>
       <NavbarServer />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      {products.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+        />
+      )}
 
       {/* ── Category Header ──────────────────────────────────────────────── */}
       <div className="relative min-h-[320px] lg:min-h-[420px] flex items-end overflow-hidden">

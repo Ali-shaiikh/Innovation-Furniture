@@ -3,6 +3,6 @@ import type { MetadataRoute } from "next";
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: { userAgent: "*", allow: "/" },
-    sitemap: "https://innovationfurniture.in/sitemap.xml",
+    sitemap: "https://www.innovationfurniture.in/sitemap.xml",
   };
 }

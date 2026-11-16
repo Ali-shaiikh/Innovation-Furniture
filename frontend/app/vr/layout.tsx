@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: '360° Panorama Studio | Innovation Designer Furniture',
+  title: '360° Panorama Studio',
   description: 'View any equirectangular panorama in an immersive 360° viewer. Paste a URL or drop an image file.',
   openGraph: {
     title: '360° Panorama Studio | Innovation Designer Furniture',

@@ -23,6 +23,7 @@ export type StrapiImage = SanityImage;
 
 export interface Category {
   _id: string;
+  _updatedAt?: string;
   name: string;
   slug: { current: string } | string;
   description: string | null;
@@ -34,6 +35,7 @@ export interface Category {
 
 export interface Product {
   _id: string;
+  _updatedAt?: string;
   name: string;
   slug: { current: string } | string;
   starting_price: number;

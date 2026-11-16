@@ -14,7 +14,7 @@ export async function generateMetadata({
   const product = await getProductBySlug(slug);
   if (!product) return { title: 'Not Found' };
   return {
-    title: `${product.name} — 360° Tour | Innovation Designer Furniture`,
+    title: `${product.name} — 360° Tour`,
     description: `Explore the ${product.name} in an immersive 360° panoramic view.`,
   };
 }

@@ -15,7 +15,8 @@ import {
 } from "@/lib/sanity";
 
 export const metadata: Metadata = {
-  title: "Innovation Designer Furniture — Luxury Living, Accessible Price",
+  title: { absolute: "Innovation Designer Furniture — Luxury Living, Accessible Price" },
+  alternates: { canonical: "/" },
 };
 
 // ─── Why Us icon map ───────────────────────────────────────────────────────────

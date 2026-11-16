@@ -48,7 +48,7 @@ export function formatINR(amount: number): string {
 export async function getCategories(): Promise<Category[]> {
   return sanityClient.fetch(
     `*[_type == "category"] | order(order asc, name asc) {
-      _id, name, slug, description, order,
+      _id, _updatedAt, name, slug, description, order,
       image { asset->, alt, hotspot, crop }
     }`,
     {},
@@ -85,7 +85,7 @@ export async function getProducts(params?: {
 
   return sanityClient.fetch(
     `${filter} | order(_createdAt asc) ${pagination} {
-      _id, name, slug, starting_price, description, materials, dimensions,
+      _id, _updatedAt, name, slug, starting_price, description, materials, dimensions,
       images[] { asset->, alt, hotspot, crop },
       category->{ _id, name, slug }
     }`,

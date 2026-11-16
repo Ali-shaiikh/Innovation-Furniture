@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Jost } from "next/font/google";
 import Script from "next/script";
 import IntroLoader from "@/components/IntroLoader";
+import { SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
 // ─── Fonts ─────────────────────────────────────────────────────────────────────
@@ -23,7 +24,7 @@ const jost = Jost({
 
 // ─── Metadata ──────────────────────────────────────────────────────────────────
 
-const BASE_URL = "https://innovationfurniture.in";
+const BASE_URL = SITE_URL;
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -38,7 +39,6 @@ export const metadata: Metadata = {
     "designer sofas",
     "premium home furniture",
     "affordable luxury furniture",
-    "replica designer furniture",
     "modern furniture India",
     "Innovation Designer Furniture",
     "furniture store Mumbai",
@@ -89,12 +89,12 @@ const LOCAL_BUSINESS_SCHEMA = {
   "@graph": [
     {
       "@type": ["FurnitureStore", "Store", "LocalBusiness"],
-      "@id": "https://innovationfurniture.in/#business",
+      "@id": "https://www.innovationfurniture.in/#business",
       "name": "Innovation Designer Furniture",
       "alternateName": ["IDF", "Innovation Furniture", "Innovation Designer Furniture Mumbai"],
-      "url": "https://innovationfurniture.in",
-      "logo": "https://innovationfurniture.in/logo3.svg",
-      "image": "https://innovationfurniture.in/og-image.jpg",
+      "url": "https://www.innovationfurniture.in",
+      "logo": "https://www.innovationfurniture.in/logo3.svg",
+      "image": "https://www.innovationfurniture.in/og-image.jpg",
       "description": "Premium designer furniture store in Mumbai. Luxury sofas, dining tables, beds and accent chairs — inspired by the world's finest makers at prices that make sense for Indian homes.",
       "telephone": "+919892410488",
       "address": {
@@ -153,19 +153,11 @@ const LOCAL_BUSINESS_SCHEMA = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://innovationfurniture.in/#website",
-      "url": "https://innovationfurniture.in",
+      "@id": "https://www.innovationfurniture.in/#website",
+      "url": "https://www.innovationfurniture.in",
       "name": "Innovation Designer Furniture",
       "description": "Premium designer furniture for Indian homes",
-      "publisher": { "@id": "https://innovationfurniture.in/#business" },
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://innovationfurniture.in/products/{search_term_string}",
-        },
-        "query-input": "required name=search_term_string",
-      },
+      "publisher": { "@id": "https://www.innovationfurniture.in/#business" },
     },
   ],
 };

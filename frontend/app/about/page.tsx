@@ -5,11 +5,14 @@ import NavbarServer from "@/components/NavbarServer";
 import Footer from "@/components/Footer";
 import AnimatedSection, { StaggeredChildren } from "@/components/AnimatedSection";
 import { getSiteSettings } from "@/lib/sanity";
+import { baseOpenGraph } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "About Us | Innovation Designer Furniture",
+  title: "About Us",
   description:
     "The story behind Innovation Designer Furniture — luxury home furnishings made accessible for Indian families.",
+  alternates: { canonical: "/about" },
+  openGraph: { ...baseOpenGraph, title: "About Us | Innovation Designer Furniture", url: "/about" },
 };
 
 export default async function AboutPage() {

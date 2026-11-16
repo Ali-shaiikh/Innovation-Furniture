@@ -5,11 +5,14 @@ import Footer from "@/components/Footer";
 import AnimatedSection from "@/components/AnimatedSection";
 import ContactForm from "@/components/ContactForm";
 import { getSiteSettings } from "@/lib/sanity";
+import { baseOpenGraph } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Contact | Innovation Designer Furniture",
+  title: "Contact",
   description:
     "Get in touch with Innovation Designer Furniture. Request a quote, book a showroom visit, or ask about our collections.",
+  alternates: { canonical: "/contact" },
+  openGraph: { ...baseOpenGraph, title: "Contact | Innovation Designer Furniture", url: "/contact" },
 };
 
 // ─── Contact Info ──────────────────────────────────────────────────────────────
