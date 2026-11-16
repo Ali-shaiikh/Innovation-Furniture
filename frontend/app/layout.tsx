@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Jost } from "next/font/google";
+import localFont from "next/font/local";
 import Script from "next/script";
 import IntroLoader from "@/components/IntroLoader";
 import { SITE_URL } from "@/lib/seo";
@@ -7,19 +7,25 @@ import "./globals.css";
 
 // ─── Fonts ─────────────────────────────────────────────────────────────────────
 
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  style: ["normal", "italic"],
+// Self-hosted variable fonts (SIL Open Font License). Bundled in the repo so builds
+// never depend on fetching from Google Fonts.
+
+const cormorant = localFont({
+  src: [
+    { path: "./fonts/CormorantGaramond.woff2",        weight: "300 700", style: "normal" },
+    { path: "./fonts/CormorantGaramond-Italic.woff2", weight: "300 700", style: "italic" },
+  ],
   variable: "--font-cormorant",
   display: "swap",
+  fallback: ["Georgia", "serif"],
 });
 
-const jost = Jost({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+const jost = localFont({
+  src: "./fonts/Jost.woff2",
+  weight: "100 900",
   variable: "--font-jost",
   display: "swap",
+  fallback: ["system-ui", "sans-serif"],
 });
 
 // ─── Metadata ──────────────────────────────────────────────────────────────────
