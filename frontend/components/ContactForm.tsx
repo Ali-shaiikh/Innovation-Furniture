@@ -23,12 +23,25 @@ export default function ContactForm() {
     e.preventDefault();
     setStatus("sending");
     try {
-      const res = await fetch("/api/contact", {
+      // Web3Forms only accepts browser-side submissions on the free plan.
+      // The access key is meant to be public.
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY,
+          subject: `New enquiry from ${formData.name} — Innovation Designer Furniture`,
+          from_name: "IDF Website",
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone || "—",
+          city: formData.city || "—",
+          interest: formData.interest || "—",
+          message: formData.message,
+        }),
       });
-      if (!res.ok) throw new Error("Request failed");
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message ?? "Request failed");
       setStatus("sent");
     } catch {
       setStatus("error");
