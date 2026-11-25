@@ -2,36 +2,32 @@ import AnimatedSection, { StaggeredChildren } from "@/components/AnimatedSection
 
 // ─── Data ──────────────────────────────────────────────────────────────────────
 
+// Real Google reviews of our sister brand, WeWorks Interiors (Thane).
+// Source: their Google Business Profile — 5.0★ from 17 reviews (Nov 2026).
+// Only add quotes here that exist on that profile, word for word.
+export const WEWORKS_GOOGLE_URL =
+  "https://www.google.com/maps/search/?api=1&query=We+Works+Interiors+Thane&query_place_id=ChIJtevogUZNr44R5R9_e51erb4";
+export const WEWORKS_RATING = "5.0";
+export const WEWORKS_REVIEW_COUNT = 17;
+
 const TESTIMONIALS = [
   {
     quote:
-      "Honestly didn't expect this level of finish at this price. The sofa looks straight out of a luxury showroom.",
-    name: "Rahul Mehta",
-    city: "Mumbai",
+      "I had an amazing experience working with WeWorksInteriors for my office design project. From start to finish, they demonstrated exceptional professionalism, creativity, and attention to detail.",
+    name: "Shezad Ali Khan",
+    city: "Google Local Guide",
   },
   {
     quote:
-      "Perfect balance of design and comfort. Guests always ask where we got our furniture from.",
-    name: "Sneha Kapoor",
-    city: "Delhi",
+      "Working with We Works Interiors was an absolute pleasure. Their team's professionalism, creativity, and attention to detail exceeded my expectations.",
+    name: "Rajwardhhan Autadey",
+    city: "Google Review",
   },
   {
     quote:
-      "Customisation options were a big plus. Got exactly what I wanted without paying designer prices.",
-    name: "Arjun Shah",
-    city: "Ahmedabad",
-  },
-  {
-    quote:
-      "Delivery and fitting were smooth, and the quality genuinely feels premium.",
-    name: "Priya Nair",
-    city: "Bangalore",
-  },
-  {
-    quote:
-      "Looks expensive, feels premium, but priced very reasonably. Exactly what we were looking for.",
-    name: "Karan Malhotra",
-    city: "Pune",
+      "Services are excellent. Puts 101% efforts. WeWorksInteriors made my home into dream one within budget.",
+    name: "Anjali Gawde",
+    city: "Google Local Guide",
   },
 ];
 
@@ -74,13 +70,17 @@ export default function Testimonials() {
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
 
         <AnimatedSection className="mb-12 lg:mb-16 text-center">
-          <p className="eyebrow mb-3">Real Homes, Real Stories</p>
+          <p className="eyebrow mb-3">From the team behind WeWorks Interiors</p>
           <h2
             id="testimonials-heading"
             className="font-serif text-[2.2rem] lg:text-[3rem] font-light text-[#3D2B1F]"
           >
-            What Our Customers Say
+            What Our Clients Say
           </h2>
+          <p className="font-sans text-sm text-[#8B7D6E] font-light mt-4 max-w-xl mx-auto">
+            Innovation Designer Furniture is the sister brand of WeWorks Interiors, Thane,
+            rated {WEWORKS_RATING}★ by {WEWORKS_REVIEW_COUNT} clients on Google.
+          </p>
         </AnimatedSection>
 
         <StaggeredChildren
@@ -125,6 +125,17 @@ export default function Testimonials() {
             </div>
           ))}
         </StaggeredChildren>
+
+        <div className="mt-10 text-center">
+          <a
+            href={WEWORKS_GOOGLE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-sans text-[11px] tracking-[0.22em] uppercase text-[#9C7B4A] hover:text-[#C9A96E] transition-colors duration-300"
+          >
+            Read all WeWorks Interiors reviews on Google
+          </a>
+        </div>
       </div>
     </section>
   );

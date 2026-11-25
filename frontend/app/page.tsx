@@ -6,7 +6,7 @@ import FeaturedCategories from "@/components/FeaturedCategories";
 import ProductCard from "@/components/ProductCard";
 import AnimatedSection, { StaggeredChildren, RevealText } from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
-import Testimonials from "@/components/Testimonials";
+import Testimonials, { WEWORKS_RATING, WEWORKS_REVIEW_COUNT } from "@/components/Testimonials";
 import type { WhyUsItem } from "@/types";
 import {
   getSiteSettings,
@@ -85,9 +85,10 @@ export default async function HomePage() {
           </div>
           <div className="hidden sm:block w-px h-5 bg-[rgba(201,169,110,0.2)]" />
           <p className="font-sans text-[13px] text-[rgba(245,239,228,0.6)] text-center">
-            <span className="text-[#C9A96E] font-medium">4.8 / 5</span>
-            {" "}·{" "}
-            Based on <span className="text-[rgba(245,239,228,0.85)]">120+ happy customers</span> across India
+            <span className="text-[#C9A96E] font-medium">{WEWORKS_RATING} / 5</span>
+            {" "}on Google from{" "}
+            <span className="text-[rgba(245,239,228,0.85)]">{WEWORKS_REVIEW_COUNT} clients</span>
+            {" "}of our sister brand, WeWorks Interiors
           </p>
         </div>
       </div>
