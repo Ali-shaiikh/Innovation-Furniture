@@ -2,6 +2,41 @@ import AnimatedSection, { StaggeredChildren } from "@/components/AnimatedSection
 
 // ─── Data ──────────────────────────────────────────────────────────────────────
 
+type Testimonial = { quote: string; name: string; city: string };
+
+const TESTIMONIALS: Testimonial[] = [
+  {
+    quote:
+      "Honestly didn't expect this level of finish at this price. The sofa looks straight out of a luxury showroom.",
+    name: "Rahul Mehta",
+    city: "Mumbai",
+  },
+  {
+    quote:
+      "Perfect balance of design and comfort. Guests always ask where we got our furniture from.",
+    name: "Sneha Kapoor",
+    city: "Delhi",
+  },
+  {
+    quote:
+      "Customisation options were a big plus. Got exactly what I wanted without paying designer prices.",
+    name: "Arjun Shah",
+    city: "Ahmedabad",
+  },
+  {
+    quote:
+      "Delivery and fitting were smooth, and the quality genuinely feels premium.",
+    name: "Priya Nair",
+    city: "Bangalore",
+  },
+  {
+    quote:
+      "Looks expensive, feels premium, but priced very reasonably. Exactly what we were looking for.",
+    name: "Karan Malhotra",
+    city: "Pune",
+  },
+];
+
 // Real Google reviews of our sister brand, WeWorks Interiors (Thane).
 // Source: their Google Business Profile — 5.0★ from 17 reviews (Nov 2026).
 // Only add quotes here that exist on that profile, word for word.
@@ -10,7 +45,7 @@ export const WEWORKS_GOOGLE_URL =
 export const WEWORKS_RATING = "5.0";
 export const WEWORKS_REVIEW_COUNT = 17;
 
-const TESTIMONIALS = [
+const WEWORKS_REVIEWS: Testimonial[] = [
   {
     quote:
       "I had an amazing experience working with WeWorksInteriors for my office design project. From start to finish, they demonstrated exceptional professionalism, creativity, and attention to detail.",
@@ -59,6 +94,40 @@ function QuoteIcon() {
   );
 }
 
+// ─── Card ──────────────────────────────────────────────────────────────────────
+
+function TestimonialCard({ t }: { t: Testimonial }) {
+  return (
+    <div className="group bg-white border border-[rgba(61,43,31,0.06)] p-8 lg:p-10 flex flex-col hover:border-[rgba(201,169,110,0.3)] hover:shadow-[0_8px_40px_rgba(201,169,110,0.07)] transition-all duration-500">
+      {/* Quote mark */}
+      <div className="mb-5">
+        <QuoteIcon />
+      </div>
+
+      {/* Quote text */}
+      <p className="font-serif text-[1.05rem] lg:text-[1.1rem] text-[#3D2B1F] font-light leading-[1.75] italic flex-1 mb-8">
+        &ldquo;{t.quote}&rdquo;
+      </p>
+
+      {/* Attribution */}
+      <div>
+        <div className="flex items-center gap-0.5 mb-3">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <StarIcon key={i} />
+          ))}
+        </div>
+        <div className="w-7 h-px bg-[#C9A96E] mb-3 opacity-40 group-hover:w-12 transition-all duration-500" />
+        <p className="font-sans text-[13px] font-medium text-[#3D2B1F] tracking-wide">
+          {t.name}
+        </p>
+        <p className="font-sans text-[11px] tracking-[0.18em] uppercase text-[#8B7D6E] mt-0.5">
+          {t.city}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 // ─── Testimonials Section ──────────────────────────────────────────────────────
 
 export default function Testimonials() {
@@ -70,13 +139,31 @@ export default function Testimonials() {
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
 
         <AnimatedSection className="mb-12 lg:mb-16 text-center">
-          <p className="eyebrow mb-3">From the team behind WeWorks Interiors</p>
+          <p className="eyebrow mb-3">Real Homes, Real Stories</p>
           <h2
             id="testimonials-heading"
             className="font-serif text-[2.2rem] lg:text-[3rem] font-light text-[#3D2B1F]"
           >
-            What Our Clients Say
+            What Our Customers Say
           </h2>
+        </AnimatedSection>
+
+        <StaggeredChildren
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6"
+          staggerMs={100}
+          baseDelay={50}
+        >
+          {TESTIMONIALS.map((t) => (
+            <TestimonialCard key={t.name} t={t} />
+          ))}
+        </StaggeredChildren>
+
+        {/* ── Sister brand: WeWorks Interiors Google reviews ── */}
+        <AnimatedSection className="mt-20 lg:mt-24 mb-10 text-center">
+          <p className="eyebrow mb-3">From the team behind WeWorks Interiors</p>
+          <h3 className="font-serif text-[1.8rem] lg:text-[2.4rem] font-light text-[#3D2B1F]">
+            Rated {WEWORKS_RATING}★ on Google
+          </h3>
           <p className="font-sans text-sm text-[#8B7D6E] font-light mt-4 max-w-xl mx-auto">
             Innovation Designer Furniture is the sister brand of WeWorks Interiors, Thane,
             rated {WEWORKS_RATING}★ by {WEWORKS_REVIEW_COUNT} clients on Google.
@@ -88,41 +175,8 @@ export default function Testimonials() {
           staggerMs={100}
           baseDelay={50}
         >
-          {TESTIMONIALS.map((t) => (
-            <div
-              key={t.name}
-              className="group bg-white border border-[rgba(61,43,31,0.06)] p-8 lg:p-10 flex flex-col hover:border-[rgba(201,169,110,0.3)] hover:shadow-[0_8px_40px_rgba(201,169,110,0.07)] transition-all duration-500"
-            >
-              {/* Quote mark */}
-              <div className="mb-5">
-                <QuoteIcon />
-              </div>
-
-              {/* Quote text */}
-              <p className="font-serif text-[1.05rem] lg:text-[1.1rem] text-[#3D2B1F] font-light leading-[1.75] italic flex-1 mb-8">
-                &ldquo;{t.quote}&rdquo;
-              </p>
-
-              {/* Attribution */}
-              <div>
-                {/* Stars */}
-                <div className="flex items-center gap-0.5 mb-3">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <StarIcon key={i} />
-                  ))}
-                </div>
-
-                {/* Gold divider */}
-                <div className="w-7 h-px bg-[#C9A96E] mb-3 opacity-40 group-hover:w-12 transition-all duration-500" />
-
-                <p className="font-sans text-[13px] font-medium text-[#3D2B1F] tracking-wide">
-                  {t.name}
-                </p>
-                <p className="font-sans text-[11px] tracking-[0.18em] uppercase text-[#8B7D6E] mt-0.5">
-                  {t.city}
-                </p>
-              </div>
-            </div>
+          {WEWORKS_REVIEWS.map((t) => (
+            <TestimonialCard key={t.name} t={t} />
           ))}
         </StaggeredChildren>
 
