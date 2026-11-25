@@ -7,6 +7,8 @@ import ProductCard from "@/components/ProductCard";
 import AnimatedSection, { StaggeredChildren, RevealText } from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
 import Testimonials from "@/components/Testimonials";
+import InstagramReels from "@/components/InstagramReels";
+import { getLatestReels } from "@/lib/instagram";
 import type { WhyUsItem } from "@/types";
 import {
   getSiteSettings,
@@ -52,10 +54,11 @@ function WhyUsIcon({ name }: { name: WhyUsItem["icon"] }) {
 // ─── Home Page ─────────────────────────────────────────────────────────────────
 
 export default async function HomePage() {
-  const [settings, categories, featuredProducts] = await Promise.all([
+  const [settings, categories, featuredProducts, reels] = await Promise.all([
     getSiteSettings(),
     getCategories(),
     getFeaturedProducts(6),
+    getLatestReels(8),
   ]);
 
   const hasWhyUs = settings?.why_us_items && settings.why_us_items.length > 0;
@@ -134,6 +137,9 @@ export default async function HomePage() {
           </div>
         </section>
       )}
+
+      {/* ── Instagram Reels (hidden until INSTAGRAM_* env vars are set) ──── */}
+      <InstagramReels reels={reels} />
 
       {/* ── Testimonials ──────────────────────────────────────────────────────── */}
       <Testimonials />
