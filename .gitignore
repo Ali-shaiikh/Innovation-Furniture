@@ -41,3 +41,6 @@ strapi/
 
 # Claude Code settings
 .claude/
+
+# Weekly Instagram report output
+tools/reports/
