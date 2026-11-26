@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Reel } from "@/lib/instagram";
 
 const PROFILE_URL = "https://www.instagram.com/innovationfurniture.in/";
@@ -54,32 +54,24 @@ export default function InstagramReels({ reels }: { reels: Reel[] }) {
 }
 
 function ReelCard({ reel, onOpen }: { reel: Reel; onOpen: () => void }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
+  // Instagram's video CDN refuses cross-site playback, so cards show the cover
+  // image and the popup uses Instagram's own embed player.
   return (
     <button
       type="button"
       onClick={onOpen}
-      onMouseEnter={() => videoRef.current?.play().catch(() => {})}
-      onMouseLeave={() => {
-        const v = videoRef.current;
-        if (v) { v.pause(); v.currentTime = 0; }
-      }}
       className="group relative shrink-0 w-[62vw] sm:w-[40vw] lg:w-auto aspect-[9/16] snap-start overflow-hidden border border-[rgba(201,169,110,0.12)] hover:border-[rgba(201,169,110,0.45)] transition-colors duration-500 text-left"
       aria-label={`Play reel: ${reel.caption || "Instagram reel"}`}
     >
-      <video
-        ref={videoRef}
-        src={reel.videoUrl}
-        poster={reel.thumbnailUrl}
-        muted
-        loop
-        playsInline
-        preload="none"
-        className="absolute inset-0 w-full h-full object-cover"
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={reel.thumbnailUrl}
+        alt=""
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.06]"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[#1A1410] via-transparent to-transparent opacity-90" />
-      <span className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center border border-[rgba(245,239,228,0.5)] text-[#F5EFE4] group-hover:opacity-0 transition-opacity duration-300">
+      <span className="absolute top-3 right-3 w-9 h-9 flex items-center justify-center border border-[rgba(245,239,228,0.5)] text-[#F5EFE4] group-hover:bg-[#C9A96E] group-hover:border-[#C9A96E] group-hover:text-[#1A1410] transition-colors duration-300">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3" /></svg>
       </span>
       {reel.caption && (
@@ -101,13 +93,12 @@ function ReelModal({ reel, onClose }: { reel: Reel; onClose: () => void }) {
       onClick={onClose}
     >
       <div className="relative w-full max-w-[400px]" onClick={(e) => e.stopPropagation()}>
-        <video
-          src={reel.videoUrl}
-          poster={reel.thumbnailUrl}
-          autoPlay
-          controls
-          playsInline
-          className="w-full max-h-[78vh] aspect-[9/16] object-cover bg-black"
+        <iframe
+          src={`${reel.permalink.replace(/\/$/, "")}/embed/`}
+          title={reel.caption || "Instagram reel"}
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen
+          className="w-full h-[78vh] max-h-[720px] bg-[#FAF7F2] border-0"
         />
         <div className="flex items-center justify-between gap-4 mt-4">
           <p className="font-sans text-sm text-[rgba(245,239,228,0.75)] font-light line-clamp-2">{reel.caption}</p>

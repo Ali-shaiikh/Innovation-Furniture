@@ -6,7 +6,6 @@
 
 export type Reel = {
   id: string;
-  videoUrl: string;
   thumbnailUrl: string;
   permalink: string;
   caption: string;
@@ -15,8 +14,6 @@ export type Reel = {
 type GraphMedia = {
   id: string;
   media_type: string;
-  media_product_type?: string;
-  media_url?: string;
   thumbnail_url?: string;
   permalink: string;
   caption?: string;
@@ -29,11 +26,11 @@ export async function getLatestReels(limit = 8): Promise<Reel[]> {
   const token = process.env.INSTAGRAM_ACCESS_TOKEN;
   if (!userId || !token) return [];
 
-  const fields = "id,media_type,media_product_type,media_url,thumbnail_url,permalink,caption";
+  const fields = "id,media_type,thumbnail_url,permalink,caption";
   const url = `${GRAPH}/${userId}/media?fields=${fields}&limit=30&access_token=${token}`;
 
   try {
-    // Instagram media URLs expire, so refresh hourly.
+    // Instagram thumbnail URLs expire, so refresh hourly.
     const res = await fetch(url, { next: { revalidate: 3600 } });
     if (!res.ok) {
       console.error("[instagram] fetch failed", res.status);
@@ -41,11 +38,10 @@ export async function getLatestReels(limit = 8): Promise<Reel[]> {
     }
     const json = (await res.json()) as { data?: GraphMedia[] };
     return (json.data ?? [])
-      .filter((m) => m.media_type === "VIDEO" && m.media_url && m.thumbnail_url)
+      .filter((m) => m.media_type === "VIDEO" && m.thumbnail_url)
       .slice(0, limit)
       .map((m) => ({
         id: m.id,
-        videoUrl: m.media_url!,
         thumbnailUrl: m.thumbnail_url!,
         permalink: m.permalink,
         caption: firstLine(m.caption),
